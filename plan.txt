@@ -1,0 +1,49 @@
+Plan:
+Behaviours:👍
+
+Movement:
+a behaviour that provides functionality to:
+-move forward using move pilot
+-can be called an utilised during other behaviours 
+-only moves with a set rectangle
+
+Color Identification:
+a behaviour that provides functionality to:
+-Uses the move behaviour to move around the grid
+-looks to identify 3 distinct colors: black for the grid lines, red for player moves, blue for its own moves
+-once identifies these colors, adds them to its map which it uses to inform its movements, should locate all naughts and crosses by mving across the grid
+-ensure that when the robot takes a subsequent turn it doesn't add an additional naught or cross into the map where they already exist, optimise by taking route to areas it knows were empty last time, therefore the only places a player could have used.
+-Ends by returning to original place, using odometry??? or looking for a specific color dot or line to take it back
+
+
+Make Move:
+-started by hitting touch sensor
+-takes information from the map and color identification to inform where player and itself has gone
+-uses algorithm to decide where is the next best place to go 
+-makes move by moving onto that grid space and stopping
+
+
+Map:
+possibly could be canibalised by color id and therefore not needed
+-makes map of the area using the color sensor
+-color sensor finds the endpoints of the grid and if anything is inside it and creates a map for the area so it knows where to navigate around
+-outputs an updates lcd drawing of the current map after it makes a move
+
+
+Emergency Stop:
+-starts by very loud noise detected by sound sensor, will need to be considered very loud to avoid it triggering often, maybe use clap filter?
+-stops the robot immediately, either stop program or stop movement, depends on preference
+
+Battery Low:
+if battery reaches certain level of power, stop the program
+
+
+Pen Twist:// later
+only add if we have time
+-called during the make move function
+-when the robot has reached the location of the its next move roatates the front motor slightly to place the pen on the paper
+-moves the robot back slightly
+-rotates the motor in the negative to lift the pen back up
+
+
+
