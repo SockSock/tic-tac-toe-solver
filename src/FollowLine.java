@@ -1,5 +1,3 @@
-package leJOSProject;
-
 import lejos.hardware.Button;
 import lejos.hardware.lcd.LCD;
 import lejos.hardware.port.SensorPort;
@@ -30,9 +28,9 @@ public class FollowLine {
 		SampleProvider color = sensor.getRedMode();
 		
 		while (!Button.ENTER.isDown()) {
-			LCD.drawString(level[0]);
+			color.fetchSample(level, 0);
+			LCD.drawString(Float.toString(level[0]), 0, 0);
 			Delay.msDelay(100);
 		}
 	}
-
 }

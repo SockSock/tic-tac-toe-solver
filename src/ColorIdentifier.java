@@ -13,6 +13,9 @@ public class ColorIdentifier implements Behavior{
 	float max = Float.MIN_VALUE;
 	float min = Float.MAX_VALUE;
 	float average = Float.MAX_VALUE;
+	private final float[] BLUE = {0.12f, 0.2f};
+	private final float[] BLACK = {0f, 0.1f};
+	private final float[] RED = {0.3f, 0.5f};
 	NXTColorSensor sensor = new NXTColorSensor(SensorPort.S1);
 	SampleProvider color = sensor.getRedMode();
 	
