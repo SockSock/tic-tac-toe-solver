@@ -12,32 +12,37 @@ import lejos.hardware.Sound;
 import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.BaseRegulatedMotor;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import lejos.robotics.navigation.Pose;
+import lejos.robotics.navigation.Waypoint;
+import lejos.robotics.pathfinding.Path;
+import lejos.robotics.pathfinding.PathFinder;
+import lejos.robotics.pathfinding.ShortestPathFinder;
+import lejos.robotics.mapping.LineMap;
+import lejos.robotics.navigation.Navigator;
 
 public class Driver {
 	final static float WHEEL_DIAMETER = 51; // The diameter (mm) of the wheels
 	final static float AXLE_LENGTH = 44; // The distance (mm) your two driven wheels
 	final static float ANGULAR_SPEED = 100; // How fast around corners (degrees/sec)
-	final static float LINEAR_SPEED = 720; // How fast in a straight line (mm/sec)
+	final static float LINEAR_SPEED = 70; // How fast in a straight line (mm/sec)
 	
 	public static void main(String[] args) {
 		BaseRegulatedMotor mL = new EV3LargeRegulatedMotor(MotorPort.A);
-		// Create a ”Wheel” with Diameter 51mm and offset 22mm left of centre.
 		Wheel wLeft = WheeledChassis.modelWheel(mL, WHEEL_DIAMETER).offset(-AXLE_LENGTH / 2);
 		BaseRegulatedMotor mR = new EV3LargeRegulatedMotor(MotorPort.B);
-		// Create a ”Wheel” with Diameter 51mm and offset 22mm right of centre.
 		Wheel wRight = WheeledChassis.modelWheel(mR, WHEEL_DIAMETER).offset(AXLE_LENGTH / 2);
-		// Create a ”Chassis” with two wheels on it.
 		Chassis chassis = new WheeledChassis((new Wheel[] {wRight, wLeft}),
 		WheeledChassis.TYPE_DIFFERENTIAL);
-		// Finally create a pilot which can drive using this chassis.
 		MovePilot pilot = new MovePilot(chassis);
 		PoseProvider poseProvider = new OdometryPoseProvider(pilot);
+		Navigator navigator = new Navigator(pilot, poseProvider);
 		
 		Behavior lowBattery = new LowBattery();
-		Behavior trundle = new Trundle(pilot);
+		Map map = new Map(navigator);
+		Behavior trundle = new Trundle(pilot, map);
 		TicTacToe ticTacToe = new TicTacToe();
 		// ticTacToe.start();
-		Arbitrator ab = new Arbitrator(new Behavior[] {lowBattery, trundle});
+		Arbitrator ab = new Arbitrator(new Behavior[] {trundle, lowBattery});
 		ab.go();
 	}
 }

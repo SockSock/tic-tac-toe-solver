@@ -23,28 +23,18 @@ import lejos.hardware.motor.BaseRegulatedMotor;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 
 public class Map {
-
-	final static float WHEEL_DIAMETER = 51; // The diameter (mm) of the wheels
-	final static float AXLE_LENGTH = 44; // The distance (mm) your two driven wheels
-	final static float ANGULAR_SPEED = 100; // How fast around corners (degrees/sec)
-	final static float LINEAR_SPEED = 70; // How fast in a straight line (mm/sec)
+	private Navigator navigator;
+	private Line[] lines;
+	private Rectangle bounds;
+	private LineMap myMap;
+	private PathFinder pf;
+	private Path route;
 	
-	public static void main(String[] args) throws Exception {
-		BaseRegulatedMotor mL = new EV3LargeRegulatedMotor(MotorPort.A);
-		// Create a ”Wheel” with Diameter 51mm and offset 22mm left of centre.
-		Wheel wLeft = WheeledChassis.modelWheel(mL, WHEEL_DIAMETER).offset(-AXLE_LENGTH / 2);
-		BaseRegulatedMotor mR = new EV3LargeRegulatedMotor(MotorPort.B);
-		// Create a ”Wheel” with Diameter 51mm and offset 22mm right of centre.
-		Wheel wRight = WheeledChassis.modelWheel(mR, WHEEL_DIAMETER).offset(AXLE_LENGTH / 2);
-		// Create a ”Chassis” with two wheels on it.
-		Chassis chassis = new WheeledChassis((new Wheel[] {wRight, wLeft}),
-		WheeledChassis.TYPE_DIFFERENTIAL);
-		// Finally create a pilot which can drive using this chassis.
-		MovePilot pilot = new MovePilot(chassis);
-		PoseProvider poseProvider = new OdometryPoseProvider(pilot);
-		Navigator navigator = new Navigator(pilot, poseProvider);
+	public Map(Navigator navigator) {
+		this.navigator = navigator;
+		lines = new Line[8];
+		bounds = new Rectangle (0, 0, 1200, 900);
 		
-		Line[] lines = new Line[8];
 		// Book
 		lines[0] = new Line(250f, 300f, 250f, 800f);
 		lines[1] = new Line(230f, 780f, 550f, 780f);
@@ -57,15 +47,22 @@ public class Map {
 		lines[6] = new Line(690f, 430f, 690f, 200f);
 		lines[7] = new Line(730f, 250f, 480f, 250f);
 		
-		Rectangle bounds = new Rectangle (0, 0, 1200, 900);
-		LineMap myMap = new LineMap (lines, bounds);
-		PathFinder pf = new ShortestPathFinder(myMap);
-		Path route = pf.findRoute(new Pose(20, 15, 90), new Waypoint (700, 800));
-		navigator.followPath(route);
-		navigator.waitForStop();
+		myMap = new LineMap (lines, bounds);
+		pf = new ShortestPathFinder(myMap);
+		try {
+			route  = pf.findRoute(new Pose(20, 15, 90), new Waypoint (0, 0));
+		} catch (DestinationUnreachableException e) {
+			System.out.println("Bro I can't lie, the destination is unreachable.");
+		}
+	}
+	
+	public void move() {
+		this.navigator.followPath(route);
+		this.navigator.waitForStop();
 		
-		LCD.drawString(poseProvider.getPose().toString(), 0, 2);
-
-		Button.ENTER.waitForPressAndRelease();
+	}
+	
+	public Pose getPose() {
+		return poseProvider.getPose();
 	}
 }
