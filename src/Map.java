@@ -21,6 +21,7 @@ import lejos.hardware.Sound;
 import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.BaseRegulatedMotor;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import lejos.robotics.geometry.Point;
 
 public class Map {
 	private Navigator navigator;
@@ -62,7 +63,7 @@ public class Map {
 		
 	}
 	
-	public Pose getPose() {
-		return poseProvider.getPose();
+	public Point getPosition() {
+		return this.navigator.getPoseProvider().getPose().getLocation();
 	}
 }

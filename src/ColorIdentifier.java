@@ -8,7 +8,7 @@ import lejos.robotics.navigation.MovePilot;
 import lejos.robotics.subsumption.Behavior;
 import lejos.utility.Delay;
 
-public class ColorIdentifier implements Behavior{
+public class ColorIdentifier implements Behavior {
 	float[] level = new float[1];
 	float max = Float.MIN_VALUE;
 	float min = Float.MAX_VALUE;
