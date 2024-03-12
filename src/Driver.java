@@ -1,8 +1,11 @@
 import lejos.robotics.subsumption.Arbitrator;
 import lejos.robotics.subsumption.Behavior;
 import lejos.hardware.port.MotorPort;
+import lejos.hardware.port.SensorPort;
+import lejos.hardware.sensor.NXTColorSensor;
 import lejos.robotics.chassis.Wheel;
 import lejos.robotics.chassis.WheeledChassis;
+import lejos.robotics.SampleProvider;
 import lejos.robotics.chassis.Chassis;
 import lejos.robotics.navigation.MovePilot;
 import lejos.robotics.localization.PoseProvider;
@@ -19,6 +22,7 @@ import lejos.robotics.pathfinding.PathFinder;
 import lejos.robotics.pathfinding.ShortestPathFinder;
 import lejos.robotics.mapping.LineMap;
 import lejos.robotics.navigation.Navigator;
+import lejos.hardware.sensor.EV3ColorSensor;
 
 public class Driver {
 	final static float WHEEL_DIAMETER = 51; // The diameter (mm) of the wheels
@@ -37,12 +41,16 @@ public class Driver {
 		PoseProvider poseProvider = new OdometryPoseProvider(pilot);
 		Navigator navigator = new Navigator(pilot, poseProvider);
 		
+		EV3ColorSensor sensor = new EV3ColorSensor(SensorPort.S1);
+		SampleProvider color = sensor.getRGBMode();
+		
 		Behavior lowBattery = new LowBattery();
+		ColorIdentifier colorIdentifier = new ColorIdentifier(color);
 		Map map = new Map(navigator);
 		Behavior trundle = new Trundle(pilot, map);
 		TicTacToe ticTacToe = new TicTacToe();
 		// ticTacToe.start();
-		Arbitrator ab = new Arbitrator(new Behavior[] {trundle, lowBattery});
+		Arbitrator ab = new Arbitrator(new Behavior[] {trundle, colorIdentifier, lowBattery});
 		ab.go();
 	}
 }

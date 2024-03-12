@@ -33,20 +33,14 @@ public class Map {
 	
 	public Map(Navigator navigator) {
 		this.navigator = navigator;
-		lines = new Line[8];
-		bounds = new Rectangle (0, 0, 1200, 900);
+		lines = new Line[4];
+		bounds = new Rectangle (0, 0, 900, 900);
 		
-		// Book
-		lines[0] = new Line(250f, 300f, 250f, 800f);
-		lines[1] = new Line(230f, 780f, 550f, 780f);
-		lines[2] = new Line(520f, 800f, 520f, 280f);
-		lines[3] = new Line(230f, 320f, 550f, 320f);
-		
-		// Cup
-		lines[4] = new Line(550f, 200f, 550f, 430f);
-		lines[5] = new Line(500f, 390f, 720f, 390f);
-		lines[6] = new Line(690f, 430f, 690f, 200f);
-		lines[7] = new Line(730f, 250f, 480f, 250f);
+		// Lines = Bounds
+		lines[0] = new Line(0f, 0f, 0f, 900f);
+		lines[1] = new Line(0f, 900f, 900f, 900f);
+		lines[2] = new Line(900f, 900f, 900f, 0f);
+		lines[3] = new Line(900f, 0f, 0f, 0f);
 		
 		myMap = new LineMap (lines, bounds);
 		pf = new ShortestPathFinder(myMap);
@@ -61,9 +55,5 @@ public class Map {
 		this.navigator.followPath(route);
 		this.navigator.waitForStop();
 		
-	}
-	
-	public Point getPosition() {
-		return this.navigator.getPoseProvider().getPose().getLocation();
 	}
 }
