@@ -56,4 +56,8 @@ public class Map {
 		this.navigator.waitForStop();
 		
 	}
+	
+	public Pose getPose() {
+		return this.navigator.getPoseProvider().getPose();
+	}
 }

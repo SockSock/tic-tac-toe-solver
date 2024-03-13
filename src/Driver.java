@@ -44,13 +44,25 @@ public class Driver {
 		EV3ColorSensor sensor = new EV3ColorSensor(SensorPort.S1);
 		SampleProvider color = sensor.getRGBMode();
 		
-		Behavior lowBattery = new LowBattery();
-		ColorIdentifier colorIdentifier = new ColorIdentifier(color);
-		Map map = new Map(navigator);
-		Behavior trundle = new Trundle(pilot, map);
+		final Behavior lowBattery = new LowBattery();
+		final ColorIdentifier colorIdentifier = new ColorIdentifier(color, poseProvider);
+		final Map map = new Map(navigator);
+		final Behavior trundle = new Trundle(pilot, map);
 		TicTacToe ticTacToe = new TicTacToe();
 		// ticTacToe.start();
-		Arbitrator ab = new Arbitrator(new Behavior[] {trundle, colorIdentifier, lowBattery});
-		ab.go();
+		
+		new Thread(new Runnable() {
+			public void run() {
+				Arbitrator ab = new Arbitrator(new Behavior[] {trundle, lowBattery});
+				ab.go();
+			}
+		}).start();
+		
+		new Thread(new Runnable() {
+			public void run() {
+				Arbitrator ab = new Arbitrator(new Behavior[] {colorIdentifier});
+				ab.go();
+			}
+		}).start();
 	}
 }

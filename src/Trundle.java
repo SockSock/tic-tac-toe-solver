@@ -31,7 +31,6 @@ public class Trundle implements Behavior {
 			flag = false;
 			return true;
 		}
-		Delay.msDelay(50);
 		
 		return false;
 	}
