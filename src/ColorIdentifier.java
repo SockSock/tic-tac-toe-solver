@@ -28,13 +28,15 @@ public class ColorIdentifier implements Behavior {
 	float[] level = new float[3];
 	private SampleProvider color;
 	private PoseProvider poseProvider;
+	private TicTacToe ticTacToe;
 	private float red;
 	private float green;
 	private float blue;
 	
-	public ColorIdentifier(SampleProvider color, PoseProvider poseProvider) {
+	public ColorIdentifier(SampleProvider color, PoseProvider poseProvider, TicTacToe ticTacToe) {
 		this.color = color;
 		this.poseProvider = poseProvider;
+		this.ticTacToe = ticTacToe;
 	}
 	
 	@Override
@@ -52,10 +54,11 @@ public class ColorIdentifier implements Behavior {
 		
 //		System.out.println(red + " " + green + " " + blue);
 		
-		if (red > 0.11 && red < 0.14 && green > 0.09 && green < 0.125 && blue > 0.12 && blue < 0.15) {
+		if (red > 0.07 && red < 0.09 && green > 0.06 && green < 0.08 && blue > 0.07 && blue < 0.09) {
 			System.out.println("White");
 		} else if (Math.max(red, Math.max(green, blue)) == red) {
-			System.out.println("Red = " + this.poseProvider.getPose());
+			float[] coords = new float[] {this.poseProvider.getPose().getX(), this.poseProvider.getPose().getY()};
+			this.ticTacToe.start(coords);
 		} else if (Math.max(red, Math.max(green, blue)) == green) {
 			System.out.println("Green");
 		} else if (Math.max(red, Math.max(green, blue)) == blue) {

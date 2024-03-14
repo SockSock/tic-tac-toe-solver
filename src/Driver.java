@@ -45,11 +45,11 @@ public class Driver {
 		SampleProvider color = sensor.getRGBMode();
 		
 		final Behavior lowBattery = new LowBattery();
-		final ColorIdentifier colorIdentifier = new ColorIdentifier(color, poseProvider);
+		final Behavior emergencyStop = new EmergencyStop();
+		final TicTacToe ticTacToe = new TicTacToe();
+		final Behavior colorIdentifier = new ColorIdentifier(color, poseProvider, ticTacToe);
 		final Map map = new Map(navigator);
 		final Behavior trundle = new Trundle(pilot, map);
-		TicTacToe ticTacToe = new TicTacToe();
-		// ticTacToe.start();
 		
 		new Thread(new Runnable() {
 			public void run() {
@@ -61,6 +61,13 @@ public class Driver {
 		new Thread(new Runnable() {
 			public void run() {
 				Arbitrator ab = new Arbitrator(new Behavior[] {colorIdentifier});
+				ab.go();
+			}
+		}).start();
+		
+		new Thread(new Runnable() {
+			public void run() {
+				Arbitrator ab = new Arbitrator(new Behavior[] {emergencyStop});
 				ab.go();
 			}
 		}).start();

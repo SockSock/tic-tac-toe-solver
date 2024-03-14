@@ -13,10 +13,11 @@ public class Trundle implements Behavior {
 	private SampleProvider touch = touchSensor.getTouchMode();
 	private MovePilot pilot;
 	private Map map;
+	private TicTacToe ticTacToe;
 	private boolean flag = false;
 	private float[] samples = new float[1];
-	private final float HALF_METRE_DISTANCE = 500;
-	private final float TEN_CENTIMETRE_DISTANCE = 100;
+	private final float HALF_METRE_DISTANCE = 250;
+	private final float TEN_CENTIMETRE_DISTANCE = 50;
 	private final float NINETY_DEGREE_TURN = 200;
 	
 	public Trundle(MovePilot pilot, Map map) {
@@ -40,7 +41,7 @@ public class Trundle implements Behavior {
 		if (flag) {
 			
 		} else {
-			for (int i = 0; i < 2; i++) {
+			for (int i = 0; i < 1; i++) {
 				pilot.travel(HALF_METRE_DISTANCE);
 				pilot.rotate(NINETY_DEGREE_TURN);
 				pilot.travel(TEN_CENTIMETRE_DISTANCE);
@@ -49,6 +50,8 @@ public class Trundle implements Behavior {
 				pilot.rotate(-NINETY_DEGREE_TURN);
 				pilot.travel(TEN_CENTIMETRE_DISTANCE);
 				pilot.rotate(-NINETY_DEGREE_TURN);
+				pilot.rotate(-NINETY_DEGREE_TURN);
+				pilot.travel(HALF_METRE_DISTANCE);
 				this.map.move();
 			}
 		}

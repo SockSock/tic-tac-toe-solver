@@ -1,7 +1,5 @@
-import java.util.Scanner;// pull in scanner
-
 public class TicTacToe {
-    private char[][] board = {// create the playing bored
+    private char[][] board = { // create the playing board
             {' ', ' ', ' '},
             {' ', ' ', ' '},
             {' ', ' ', ' '}
@@ -13,26 +11,20 @@ public class TicTacToe {
     	
     }
 
-    public void start() {
-        Scanner scanner = new Scanner(System.in);
+    public void start(float[] coords) {
+    		makeComputerMove();
 
-        makeComputerMove();
-
-        while (true) {
-            printBoard();// display the bored
-
-      
-            int row = scanner.nextInt() - 1;// take the players input
-            int col = scanner.nextInt() - 1;
+            printBoard();// display the board
+            
+            int row = Math.round(coords[0]);
+            int col = Math.round(coords[1]);
 
             if (isValidMove(row, col)) {// checks if the move is valid
                 board[row][col] = currentPlayer;
                 if (isWinner(board, currentPlayer)) {// checks for wins or draws
                     printBoard();
-                    break;
                 } else if (isBoardFull(board)) {
                     printBoard();
-                    break;
                 }
                 currentPlayer = 'O';
             } else {
@@ -43,17 +35,12 @@ public class TicTacToe {
 
       
             makeComputerMove();// computer makes a move
-            if (isWinner(board, computerPlayer)) {// checks if anyone won yet
-                printBoard();
-                break;
-            } else if (isBoardFull(board)) {
-                printBoard();
-                break;
-            }
-            currentPlayer = 'X';
-        }
-
-        scanner.close();
+           if (isWinner(board, computerPlayer)) {// checks if anyone won yet
+               printBoard();
+           } else if (isBoardFull(board)) {
+               printBoard();
+           }
+           currentPlayer = 'X';
     }
 
     private void makeComputerMove(){ // make the computer have a go
