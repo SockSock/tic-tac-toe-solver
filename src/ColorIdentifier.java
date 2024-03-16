@@ -52,17 +52,19 @@ public class ColorIdentifier implements Behavior {
 		green = level[1];
 		blue = level[2];
 		
-//		System.out.println(red + " " + green + " " + blue);
+		System.out.println(red + " " + green + " " + blue);
 		
-		if (red > 0.07 && red < 0.09 && green > 0.06 && green < 0.08 && blue > 0.07 && blue < 0.09) {
-			System.out.println("White");
+		if (red > 0.03 && red < 0.13 && green > 0.02 && green < 0.12 && blue > 0.03 && blue < 0.13) {
+			// System.out.println("White");
 		} else if (Math.max(red, Math.max(green, blue)) == red) {
-			float[] coords = new float[] {this.poseProvider.getPose().getX(), this.poseProvider.getPose().getY()};
-			this.ticTacToe.start(coords);
+			System.out.println("Player");
+			this.ticTacToe.start(calculatePosition(this.poseProvider.getPose().getX(), this.poseProvider.getPose().getY()));
+			Delay.msDelay(2000);
 		} else if (Math.max(red, Math.max(green, blue)) == green) {
 			System.out.println("Green");
 		} else if (Math.max(red, Math.max(green, blue)) == blue) {
-			System.out.println("Blue");
+//			System.out.println("Computer");
+//			this.ticTacToe.start(calculatePosition(this.poseProvider.getPose().getX(), this.poseProvider.getPose().getY()));
 		} else {
 			float intensity = red + green + blue;
 			if (intensity < 0.5 && (red < 0.15 || green < 0.15 || blue < 0.15)) {
@@ -76,5 +78,49 @@ public class ColorIdentifier implements Behavior {
 	@Override
 	public void suppress() {
 
+	}
+	
+	private float[] calculatePosition(float x, float y) {
+		float[] coords = new float[2];
+		
+		if (x > 0 && x < 300 && y > 0 && y < 300) {
+			coords[0] = 2;
+			coords[1] = 0;
+			return coords;
+		} else if (x > 300 && x < 600 && y > 0 && y < 300) {
+			coords[0] = 2;
+			coords[1] = 1;
+			return coords;
+		} else if (x > 600 && x < 900 && y > 0 && y < 300) {
+			coords[0] = 2;
+			coords[1] = 2;
+			return coords;
+		} else if (x > 0 && x < 300 && y > 300 && y < 600) {
+			coords[0] = 1;
+			coords[1] = 0;
+			return coords;
+		} else if (x > 300 && x < 600 && y > 300 && y < 600) {
+			coords[0] = 1;
+			coords[1] = 1;
+			return coords;
+		} else if (x > 600 && x < 900 && y > 300 && y < 600) {
+			coords[0] = 1;
+			coords[1] = 2;
+			return coords;
+		} else if (x > 0 && x < 300 && y > 600 && y < 900) {
+			coords[0] = 0;
+			coords[1] = 0;
+			return coords;
+		} else if (x > 300 && x < 600 && y > 600 && y < 900) {
+			coords[0] = 0;
+			coords[1] = 1;
+			return coords;
+		} else if (x > 600 && x < 900 && y > 600 && y < 900) {
+			coords[0] = 0;
+			coords[1] = 2;
+			return coords;
+		}
+		
+		return coords;
 	}
 }

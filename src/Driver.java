@@ -49,7 +49,7 @@ public class Driver {
 		final TicTacToe ticTacToe = new TicTacToe();
 		final Behavior colorIdentifier = new ColorIdentifier(color, poseProvider, ticTacToe);
 		final Map map = new Map(navigator);
-		final Behavior trundle = new Trundle(pilot, map);
+		final Behavior trundle = new Trundle(pilot, map, poseProvider, navigator, ticTacToe);
 		
 		new Thread(new Runnable() {
 			public void run() {

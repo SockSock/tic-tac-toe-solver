@@ -1,20 +1,45 @@
+import lejos.robotics.subsumption.Arbitrator;
+import lejos.robotics.subsumption.Behavior;
+import lejos.hardware.port.MotorPort;
+import lejos.hardware.port.SensorPort;
+import lejos.hardware.sensor.NXTColorSensor;
+import lejos.robotics.chassis.Wheel;
+import lejos.robotics.chassis.WheeledChassis;
+import lejos.robotics.SampleProvider;
+import lejos.robotics.chassis.Chassis;
+import lejos.robotics.navigation.MovePilot;
+import lejos.robotics.localization.PoseProvider;
+import lejos.robotics.localization.OdometryPoseProvider;
+import lejos.utility.Delay;
+import lejos.hardware.Sound;
+import lejos.hardware.lcd.LCD;
+import lejos.hardware.motor.BaseRegulatedMotor;
+import lejos.hardware.motor.EV3LargeRegulatedMotor;
+import lejos.robotics.navigation.Pose;
+import lejos.robotics.navigation.Waypoint;
+import lejos.robotics.pathfinding.Path;
+import lejos.robotics.pathfinding.PathFinder;
+import lejos.robotics.pathfinding.ShortestPathFinder;
+import lejos.robotics.mapping.LineMap;
+import lejos.robotics.navigation.Navigator;
+import lejos.hardware.sensor.EV3ColorSensor;
+
 public class TicTacToe {
     private char[][] board = { // create the playing board
             {' ', ' ', ' '},
             {' ', ' ', ' '},
             {' ', ' ', ' '}
     };
-    private char currentPlayer = 'X';
-    private char computerPlayer = 'O';
+    private char currentPlayer = 'X'; // Red
+    private char computerPlayer = 'O'; // Blue
+    private float[] destination = new float[2];
     
     public TicTacToe() {
     	
     }
 
     public void start(float[] coords) {
-    		makeComputerMove();
-
-            printBoard();// display the board
+    		printBoard();// display the board
             
             int row = Math.round(coords[0]);
             int col = Math.round(coords[1]);
@@ -30,15 +55,21 @@ public class TicTacToe {
             } else {
                 // checks for move validity
             }
+            
+            makeComputerMove(); // computer makes a move
 
             printBoard();// print the updated board
 
-      
-            makeComputerMove();// computer makes a move
            if (isWinner(board, computerPlayer)) {// checks if anyone won yet
                printBoard();
+               System.out.println(currentPlayer + " has won the game!");
+               Delay.msDelay(5000);
+               System.exit(-1);
            } else if (isBoardFull(board)) {
                printBoard();
+               System.out.println("It's a draw!");
+               Delay.msDelay(5000);
+               System.exit(-1);
            }
            currentPlayer = 'X';
     }
@@ -46,6 +77,7 @@ public class TicTacToe {
     private void makeComputerMove(){ // make the computer have a go
         int[] bestMove = minimax(board, computerPlayer);
         board[bestMove[0]][bestMove[1]] = computerPlayer;
+        calculatePosition(bestMove[0], bestMove[1]);
     }
     private int[] minimax(char[][] currentBoard, char player) {// minimax algorithm implementation
         int[] result = new int[]{-1, -1, (player == computerPlayer) ? Integer.MIN_VALUE : Integer.MAX_VALUE};
@@ -141,5 +173,33 @@ public class TicTacToe {
         }
 
         return false;
+    }
+    
+    public void calculatePosition(int i, int j) {
+	    float[] coords = new float[2];
+	    
+	    // Determine x position
+	    if (j == 0) {
+	        coords[0] = 0;
+	    } else if (j == 1) {
+	        coords[0] = 300;
+	    } else if (j == 2) {
+	        coords[0] = 600;
+	    }
+	    
+	    // Determine y position
+	    if (i == 0) {
+	        coords[1] = 0;
+	    } else if (i == 1) {
+	        coords[1] = 300;
+	    } else if (i == 2) {
+	        coords[1] = 600;
+	    }
+	    
+	    destination = coords;
+	}
+    
+    public float[] getDestination() {
+    	return destination;
     }
 }

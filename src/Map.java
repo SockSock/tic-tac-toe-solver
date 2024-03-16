@@ -37,10 +37,10 @@ public class Map {
 		bounds = new Rectangle (0, 0, 900, 900);
 		
 		// Lines = Bounds
-		lines[0] = new Line(0f, 0f, 0f, 900f);
-		lines[1] = new Line(0f, 900f, 900f, 900f);
-		lines[2] = new Line(900f, 900f, 900f, 0f);
-		lines[3] = new Line(900f, 0f, 0f, 0f);
+		lines[0] = new Line(300f, 0f, 300f, 900f);
+		lines[1] = new Line(600f, 0f, 600f, 900f);
+		lines[2] = new Line(0f, 300f, 900f, 300f);
+		lines[3] = new Line(0f, 600f, 900f, 600f);
 		
 		myMap = new LineMap (lines, bounds);
 		pf = new ShortestPathFinder(myMap);
@@ -54,6 +54,7 @@ public class Map {
 	public void move() {
 		this.navigator.followPath(route);
 		this.navigator.waitForStop();
+		this.navigator.clearPath();
 		
 	}
 	
