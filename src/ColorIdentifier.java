@@ -29,14 +29,16 @@ public class ColorIdentifier implements Behavior {
 	private SampleProvider color;
 	private PoseProvider poseProvider;
 	private TicTacToe ticTacToe;
+	private Trundle trundle;
 	private float red;
 	private float green;
 	private float blue;
 	
-	public ColorIdentifier(SampleProvider color, PoseProvider poseProvider, TicTacToe ticTacToe) {
+	public ColorIdentifier(SampleProvider color, PoseProvider poseProvider, TicTacToe ticTacToe, Trundle trundle) {
 		this.color = color;
 		this.poseProvider = poseProvider;
 		this.ticTacToe = ticTacToe;
+		this.trundle = trundle;
 	}
 	
 	@Override
@@ -52,19 +54,18 @@ public class ColorIdentifier implements Behavior {
 		green = level[1];
 		blue = level[2];
 		
-		System.out.println(red + " " + green + " " + blue);
+		// System.out.println(red + " " + green + " " + blue);
 		
-		if (red > 0.03 && red < 0.13 && green > 0.02 && green < 0.12 && blue > 0.03 && blue < 0.13) {
+		if (red > 0.20 && red < 0.30 && green > 0.18 && green < 0.26 && blue > 0.18 && blue < 0.26) {
 			// System.out.println("White");
 		} else if (Math.max(red, Math.max(green, blue)) == red) {
 			System.out.println("Player");
 			this.ticTacToe.start(calculatePosition(this.poseProvider.getPose().getX(), this.poseProvider.getPose().getY()));
-			Delay.msDelay(2000);
-		} else if (Math.max(red, Math.max(green, blue)) == green) {
-			System.out.println("Green");
+			while (this.trundle.getFlag()) {
+				Delay.msDelay(1);
+			}
 		} else if (Math.max(red, Math.max(green, blue)) == blue) {
-//			System.out.println("Computer");
-//			this.ticTacToe.start(calculatePosition(this.poseProvider.getPose().getX(), this.poseProvider.getPose().getY()));
+			System.out.println("Computer");
 		} else {
 			float intensity = red + green + blue;
 			if (intensity < 0.5 && (red < 0.15 || green < 0.15 || blue < 0.15)) {

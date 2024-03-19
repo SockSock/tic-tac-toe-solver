@@ -93,4 +93,8 @@ public class Trundle implements Behavior {
 	public void suppress() {
 		
 	}
+	
+	public boolean getFlag() {
+		return flag;
+	}
 }

@@ -47,9 +47,9 @@ public class Driver {
 		final Behavior lowBattery = new LowBattery();
 		final Behavior emergencyStop = new EmergencyStop();
 		final TicTacToe ticTacToe = new TicTacToe();
-		final Behavior colorIdentifier = new ColorIdentifier(color, poseProvider, ticTacToe);
 		final Map map = new Map(navigator);
-		final Behavior trundle = new Trundle(pilot, map, poseProvider, navigator, ticTacToe);
+		final Trundle trundle = new Trundle(pilot, map, poseProvider, navigator, ticTacToe);
+		final Behavior colorIdentifier = new ColorIdentifier(color, poseProvider, ticTacToe, trundle);
 		
 		new Thread(new Runnable() {
 			public void run() {
