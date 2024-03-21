@@ -24,7 +24,6 @@ import lejos.robotics.pathfinding.ShortestPathFinder;
 import lejos.robotics.mapping.LineMap;
 import lejos.robotics.navigation.Navigator;
 import lejos.hardware.sensor.EV3ColorSensor;
-import java.util.concurrent.*;
 
 public class Trundle implements Behavior { // 40 secs
 	private EV3TouchSensor touchSensor = new EV3TouchSensor(SensorPort.S2);
@@ -34,8 +33,6 @@ public class Trundle implements Behavior { // 40 secs
 	private TicTacToe ticTacToe;
 	private PoseProvider poseProvider;
 	private Navigator navigator;
-	private ExecutorService executor;
-    private Future<?> future;
 	private boolean flag = false;
 	private long startTime = 0;
 	private long retreat;
@@ -93,65 +90,24 @@ public class Trundle implements Behavior { // 40 secs
 			
 			startTime = System.currentTimeMillis();
 			this.retreat = this.ticTacToe.getRetreat();
-			executor = Executors.newSingleThreadExecutor();
-	        future = executor.submit(() -> {
-	            while ((System.currentTimeMillis() - startTime) < this.retreat) {
-	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
-	                    pilot.travel(HALF_METRE_DISTANCE);
-	                }
-	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
-	                    pilot.rotate(-NINETY_DEGREE_TURN);
-	                }
-	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
-	                    pilot.travel(TEN_CENTIMETRE_DISTANCE);
-	                }
-	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
-	                    pilot.rotate(-NINETY_DEGREE_TURN);
-	                }
-	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
-	                    pilot.travel(HALF_METRE_DISTANCE);
-	                }
-	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
-	                    pilot.rotate(NINETY_DEGREE_TURN);
-	                }
-	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
-	                    pilot.travel(TWENTY_CENTIMETRE_DISTANCE);
-	                }
-	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
-	                    pilot.rotate(NINETY_DEGREE_TURN);
-	                }
-	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
-	                    pilot.travel(HALF_METRE_DISTANCE);
-	                }
-	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
-	                    pilot.rotate(NINETY_DEGREE_TURN);
-	                }
-	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
-	                    pilot.travel(TEN_CENTIMETRE_DISTANCE);
-	                }
-	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
-	                    pilot.travel(TEN_CENTIMETRE_DISTANCE);
-	                }
-	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
-	                    pilot.rotate(NINETY_DEGREE_TURN);
-	                }
-	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
-	                    pilot.travel(HALF_METRE_DISTANCE);
-	                }
-	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
-	                    pilot.rotate(-NINETY_DEGREE_TURN);
-	                }
-	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
-	                    pilot.rotate(-NINETY_DEGREE_TURN);
-	                }
-	            }
-	        });
-	        
-	        // Check if the condition is satisfied
-	        if ((System.currentTimeMillis() - startTime) >= this.retreat) {
-	            future.cancel(true); // Stop the execution
-	            executor.shutdown(); // Shutdown the executor service
-	        }
+			while ((System.currentTimeMillis() - startTime) < this.retreat) {
+			    pilot.travel(HALF_METRE_DISTANCE);			   
+			    pilot.rotate(-NINETY_DEGREE_TURN);
+			    pilot.travel(TEN_CENTIMETRE_DISTANCE);
+			    pilot.rotate(-NINETY_DEGREE_TURN);
+			    pilot.travel(HALF_METRE_DISTANCE);
+			    pilot.rotate(NINETY_DEGREE_TURN);
+			    pilot.travel(TWENTY_CENTIMETRE_DISTANCE);
+			    pilot.rotate(NINETY_DEGREE_TURN);
+			    pilot.travel(HALF_METRE_DISTANCE);
+			    pilot.rotate(NINETY_DEGREE_TURN);
+			    pilot.travel(TEN_CENTIMETRE_DISTANCE);
+			    pilot.travel(TEN_CENTIMETRE_DISTANCE);
+			    pilot.rotate(NINETY_DEGREE_TURN);
+			    pilot.travel(HALF_METRE_DISTANCE);
+			    pilot.rotate(-NINETY_DEGREE_TURN);
+			    pilot.rotate(-NINETY_DEGREE_TURN);
+			}
 			
 			this.retreat = 0;
 		}
