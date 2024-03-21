@@ -27,8 +27,8 @@ import lejos.hardware.sensor.EV3ColorSensor;
 public class Driver {
 	final static float WHEEL_DIAMETER = 51; // The diameter (mm) of the wheels
 	final static float AXLE_LENGTH = 44; // The distance (mm) your two driven wheels
-	final static float ANGULAR_SPEED = 100; // How fast around corners (degrees/sec)
-	final static float LINEAR_SPEED = 70; // How fast in a straight line (mm/sec)
+	final static double ANGULAR_SPEED = 100; // How fast around corners (degrees/sec)
+	final static double LINEAR_SPEED = 80; // How fast in a straight line (mm/sec)
 	
 	public static void main(String[] args) {
 		BaseRegulatedMotor mL = new EV3LargeRegulatedMotor(MotorPort.A);
@@ -38,6 +38,8 @@ public class Driver {
 		Chassis chassis = new WheeledChassis((new Wheel[] {wRight, wLeft}),
 		WheeledChassis.TYPE_DIFFERENTIAL);
 		MovePilot pilot = new MovePilot(chassis);
+		pilot.setLinearSpeed(LINEAR_SPEED);
+		pilot.setAngularSpeed(ANGULAR_SPEED);
 		PoseProvider poseProvider = new OdometryPoseProvider(pilot);
 		Navigator navigator = new Navigator(pilot, poseProvider);
 		

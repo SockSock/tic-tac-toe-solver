@@ -9,7 +9,7 @@ public class EmergencyStop implements Behavior {
     private float[] sample;
     private boolean suppressed = false;
 
-    private static final float SOUND_THRESHOLD = 0.8f; // 0.8f
+    private static final float SOUND_THRESHOLD = 3f; // 0.8f
 
     public EmergencyStop() {
         this.soundSensor = new NXTSoundSensor(SensorPort.S4);

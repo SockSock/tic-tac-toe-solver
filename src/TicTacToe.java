@@ -45,16 +45,22 @@ public class TicTacToe {
             int col = Math.round(coords[1]);
 
             if (isValidMove(row, col)) {// checks if the move is valid
-                board[row][col] = currentPlayer;
-                if (isWinner(board, currentPlayer)) {// checks for wins or draws
-                    printBoard();
-                } else if (isBoardFull(board)) {
-                    printBoard();
-                }
-                currentPlayer = 'O';
-            } else {
-                // checks for move validity
-            }
+                 board[row][col] = currentPlayer;
+                 if (isWinner(board, currentPlayer)) {// checks for wins or draws
+                     printBoard();
+                     System.out.println("Player X wins!");
+                     Delay.msDelay(5000);
+                     System.exit(-1);
+                 } else if (isBoardFull(board)) {
+                     printBoard();
+                     System.out.println("It's a draw!");
+                     Delay.msDelay(5000);
+                     System.exit(-1);
+                 }
+                 currentPlayer = 'O';
+             } else {
+                  // Check if the move is valid
+               }
             
             makeComputerMove(); // computer makes a move
 
@@ -62,7 +68,7 @@ public class TicTacToe {
 
            if (isWinner(board, computerPlayer)) {// checks if anyone won yet
                printBoard();
-               System.out.println(currentPlayer + " has won the game!");
+               System.out.println("Player O wins!");
                Delay.msDelay(5000);
                System.exit(-1);
            } else if (isBoardFull(board)) {
@@ -138,7 +144,7 @@ public class TicTacToe {
         }
     }
 
-    private boolean isValidMove(int row, int col) {// checks move validity
+    public boolean isValidMove(int row, int col) {// checks move validity
         return row >= 0 && row < 3 && col >= 0 && col < 3 && board[row][col] == ' ';
     }
 
@@ -178,24 +184,7 @@ public class TicTacToe {
     public void calculatePosition(int i, int j) {
 	    float[] coords = new float[2];
 	    
-	    // Determine x position
-	    if (j == 0) {
-	        coords[0] = 0;
-	    } else if (j == 1) {
-	        coords[0] = 300;
-	    } else if (j == 2) {
-	        coords[0] = 600;
-	    }
-	    
-	    // Determine y position
-	    if (i == 0) {
-	        coords[1] = 0;
-	    } else if (i == 1) {
-	        coords[1] = 300;
-	    } else if (i == 2) {
-	        coords[1] = 600;
-	    }
-	    
+	  
 	    destination = coords;
 	}
     
