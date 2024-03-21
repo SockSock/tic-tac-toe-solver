@@ -59,7 +59,7 @@ public class ColorIdentifier implements Behavior {
 		
 		if (red > 0.18 && red < 0.32 && green > 0.16 && green < 0.30 && blue > 0.16 && blue < 0.30) {
 			// System.out.println("White");
-		} else if (Math.max(red, Math.max(green, blue)) == red && !this.trundle.getFlag() && (System.currentTimeMillis() - startTime) < 26000) {
+		} else if (Math.max(red, Math.max(green, blue)) == red && !this.trundle.getFlag() && (System.currentTimeMillis() - startTime) < 27000) {
 			System.out.println("Player");
 			float[] test = calculatePosition(System.currentTimeMillis() - startTime);
 			while (test == null) {
@@ -88,73 +88,65 @@ public class ColorIdentifier implements Behavior {
 	
 	private float[] calculatePosition(long time) {   
 	    float[] coords = new float[2];
+	    System.out.println(time);
 	    
 	    if (time > 10 && time < 2111) {
 	        if (this.ticTacToe.isValidMove(0, 0)) {
 	            coords[0] = 0;
 	            coords[1] = 0;
-	            System.out.println(time);
 	            return coords;
 	        }
 	    } else if (time > 2111 && time < 2900) {
 	        if (this.ticTacToe.isValidMove(0, 1)) {
 	            coords[0] = 0;
 	            coords[1] = 1;
-	            System.out.println(time);
 	            return coords;
 	        }
 	    } else if (time > 2900 && time < 4122) {
 	        if (this.ticTacToe.isValidMove(0, 2)) {
 	            coords[0] = 0;
 	            coords[1] = 2;
-	            System.out.println(time);
 	            return coords;
 	        }
 	    } else if (time > 11828 && time < 12828) {
 	        if (this.ticTacToe.isValidMove(1, 2)) {
 	            coords[0] = 1;
 	            coords[1] = 2;
-	            System.out.println(time);
 	            return coords;
 	        }
 	    } else if (time > 12828 && time < 14000) {
 	        if (this.ticTacToe.isValidMove(1, 1)) {
 	            coords[0] = 1;
 	            coords[1] = 1;
-	            System.out.println(time);
 	            return coords;
 	        }
 	    } else if (time > 14000 && time < 15000) {
 	        if (this.ticTacToe.isValidMove(1, 0)) {
 	            coords[0] = 1;
 	            coords[1] = 0;
-	            System.out.println(time);
 	            return coords;
 	        }
 	    } else if (time > 23000 && time < 24000) {
 	        if (this.ticTacToe.isValidMove(2, 0)) {
 	            coords[0] = 2;
 	            coords[1] = 0;
-	            System.out.println(time);
 	            return coords;
 	        }
 	    } else if (time > 24000 && time < 25000) {
 	        if (this.ticTacToe.isValidMove(2, 1)) {
 	            coords[0] = 2;
 	            coords[1] = 1;
-	            System.out.println(time);
 	            return coords;
 	        }
 	    } else if (time > 25000 && time < 26000) {
 	        if (this.ticTacToe.isValidMove(2, 2)) {
 	            coords[0] = 2;
 	            coords[1] = 2;
-	            System.out.println(time);
 	            return coords;
 	        }
 	    }
 	    
-	    System.out.println(time + " " + "Illegal Move Bro.");
+	    // System.out.println(time + " " + "Illegal Move Bro.");
 	    return null;
 	}
 }

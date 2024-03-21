@@ -24,6 +24,7 @@ import lejos.robotics.pathfinding.ShortestPathFinder;
 import lejos.robotics.mapping.LineMap;
 import lejos.robotics.navigation.Navigator;
 import lejos.hardware.sensor.EV3ColorSensor;
+import java.util.concurrent.*;
 
 public class Trundle implements Behavior { // 40 secs
 	private EV3TouchSensor touchSensor = new EV3TouchSensor(SensorPort.S2);
@@ -33,13 +34,16 @@ public class Trundle implements Behavior { // 40 secs
 	private TicTacToe ticTacToe;
 	private PoseProvider poseProvider;
 	private Navigator navigator;
+	private ExecutorService executor;
+    private Future<?> future;
 	private boolean flag = false;
 	private long startTime = 0;
+	private long retreat;
 	private float[] samples = new float[1];
-	private final float HALF_METRE_DISTANCE = 380; // 260
-	private final float TEN_CENTIMETRE_DISTANCE = 40; // 60
+	private final float HALF_METRE_DISTANCE = 380; // 380
+	private final float TEN_CENTIMETRE_DISTANCE = 40; // 40
 	private final float TWENTY_CENTIMETRE_DISTANCE = 60; // 60
-	private final float NINETY_DEGREE_TURN = 200; // 230
+	private final float NINETY_DEGREE_TURN = 210; // 200
 	
 	public Trundle(MovePilot pilot, Map map, PoseProvider poseProvider, Navigator navigator, TicTacToe ticTacToe) {
 		this.pilot = pilot;
@@ -47,6 +51,7 @@ public class Trundle implements Behavior { // 40 secs
 		this.poseProvider = poseProvider;
 		this.navigator = navigator;
 		this.ticTacToe = ticTacToe;
+		this.retreat = 0;
 	}
 
 	@Override
@@ -65,7 +70,7 @@ public class Trundle implements Behavior { // 40 secs
 		if (flag) {
 			
 		} else {
-			for (int i = 0; i < 1; i++) {
+			for (int i = 0; i < 1; i++) { // The most useful for loop in the entire world (based based).
 				startTime = System.currentTimeMillis();
 				
 				pilot.travel(HALF_METRE_DISTANCE);
@@ -84,10 +89,71 @@ public class Trundle implements Behavior { // 40 secs
 				pilot.travel(HALF_METRE_DISTANCE);
 				pilot.rotate(-NINETY_DEGREE_TURN);
 				pilot.rotate(-NINETY_DEGREE_TURN);
-				
-//				float[] destination = this.ticTacToe.getDestination();
-//				this.navigator.goTo(destination[0], destination[1]);
 			}
+			
+			startTime = System.currentTimeMillis();
+			this.retreat = this.ticTacToe.getRetreat();
+			executor = Executors.newSingleThreadExecutor();
+	        future = executor.submit(() -> {
+	            while ((System.currentTimeMillis() - startTime) < this.retreat) {
+	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
+	                    pilot.travel(HALF_METRE_DISTANCE);
+	                }
+	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
+	                    pilot.rotate(-NINETY_DEGREE_TURN);
+	                }
+	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
+	                    pilot.travel(TEN_CENTIMETRE_DISTANCE);
+	                }
+	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
+	                    pilot.rotate(-NINETY_DEGREE_TURN);
+	                }
+	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
+	                    pilot.travel(HALF_METRE_DISTANCE);
+	                }
+	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
+	                    pilot.rotate(NINETY_DEGREE_TURN);
+	                }
+	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
+	                    pilot.travel(TWENTY_CENTIMETRE_DISTANCE);
+	                }
+	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
+	                    pilot.rotate(NINETY_DEGREE_TURN);
+	                }
+	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
+	                    pilot.travel(HALF_METRE_DISTANCE);
+	                }
+	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
+	                    pilot.rotate(NINETY_DEGREE_TURN);
+	                }
+	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
+	                    pilot.travel(TEN_CENTIMETRE_DISTANCE);
+	                }
+	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
+	                    pilot.travel(TEN_CENTIMETRE_DISTANCE);
+	                }
+	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
+	                    pilot.rotate(NINETY_DEGREE_TURN);
+	                }
+	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
+	                    pilot.travel(HALF_METRE_DISTANCE);
+	                }
+	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
+	                    pilot.rotate(-NINETY_DEGREE_TURN);
+	                }
+	                if ((System.currentTimeMillis() - startTime) < this.retreat) {
+	                    pilot.rotate(-NINETY_DEGREE_TURN);
+	                }
+	            }
+	        });
+	        
+	        // Check if the condition is satisfied
+	        if ((System.currentTimeMillis() - startTime) >= this.retreat) {
+	            future.cancel(true); // Stop the execution
+	            executor.shutdown(); // Shutdown the executor service
+	        }
+			
+			this.retreat = 0;
 		}
 		
 		flag = true;

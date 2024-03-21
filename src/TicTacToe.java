@@ -32,7 +32,7 @@ public class TicTacToe {
     };
     private char currentPlayer = 'X'; // Red
     private char computerPlayer = 'O'; // Blue
-    private float[] destination = new float[2];
+    private long retreat = 0;
     
     public TicTacToe() {
     	
@@ -83,7 +83,7 @@ public class TicTacToe {
     private void makeComputerMove(){ // make the computer have a go
         int[] bestMove = minimax(board, computerPlayer);
         board[bestMove[0]][bestMove[1]] = computerPlayer;
-        calculatePosition(bestMove[0], bestMove[1]);
+        getLocationBox(bestMove[0], bestMove[1]);
     }
     private int[] minimax(char[][] currentBoard, char player) {// minimax algorithm implementation
         int[] result = new int[]{-1, -1, (player == computerPlayer) ? Integer.MIN_VALUE : Integer.MAX_VALUE};
@@ -181,14 +181,29 @@ public class TicTacToe {
         return false;
     }
     
-    public void calculatePosition(int i, int j) {
-	    float[] coords = new float[2];
-	    
-	  
-	    destination = coords;
-	}
+    public void getLocationBox(int x, int y) {
+    	if (x == 0 && y == 0) {
+    		retreat = 10;
+    	} else if (x == 0 && y == 1) {
+    		retreat = 2111;
+    	} else if (x == 0 && y == 2) {
+    		retreat = 2900;
+    	} else if (x == 1 && y == 2) {
+    		retreat = 11828;
+    	} else if (x == 1 && y == 1) {
+    		retreat = 12828;
+    	} else if (x == 1 && y == 0) {
+    		retreat = 14000;
+    	} else if (x == 2 && y == 0) {
+    		retreat = 23000;
+    	} else if (x == 2 && y == 1) {
+    		retreat = 24000;
+    	} else if (x == 2 && y == 2) {
+    		retreat = 25000;
+    	}
+    }
     
-    public float[] getDestination() {
-    	return destination;
+    public long getRetreat() {
+    	return retreat;
     }
 }
