@@ -1,27 +1,8 @@
 import lejos.robotics.subsumption.Arbitrator;
 import lejos.robotics.subsumption.Behavior;
-import lejos.hardware.port.MotorPort;
 import lejos.hardware.port.SensorPort;
-import lejos.hardware.sensor.NXTColorSensor;
-import lejos.robotics.chassis.Wheel;
-import lejos.robotics.chassis.WheeledChassis;
 import lejos.robotics.SampleProvider;
-import lejos.robotics.chassis.Chassis;
-import lejos.robotics.navigation.MovePilot;
-import lejos.robotics.localization.PoseProvider;
-import lejos.robotics.localization.OdometryPoseProvider;
 import lejos.utility.Delay;
-import lejos.hardware.Sound;
-import lejos.hardware.lcd.LCD;
-import lejos.hardware.motor.BaseRegulatedMotor;
-import lejos.hardware.motor.EV3LargeRegulatedMotor;
-import lejos.robotics.navigation.Pose;
-import lejos.robotics.navigation.Waypoint;
-import lejos.robotics.pathfinding.Path;
-import lejos.robotics.pathfinding.PathFinder;
-import lejos.robotics.pathfinding.ShortestPathFinder;
-import lejos.robotics.mapping.LineMap;
-import lejos.robotics.navigation.Navigator;
 import lejos.hardware.sensor.EV3ColorSensor;
 
 public class ColorIdentifier implements Behavior {
@@ -60,7 +41,6 @@ public class ColorIdentifier implements Behavior {
 		if (red > 0.18 && red < 0.32 && green > 0.16 && green < 0.30 && blue > 0.16 && blue < 0.30) {
 			// System.out.println("White");
 		} else if (Math.max(red, Math.max(green, blue)) == red && !this.trundle.getFlag() && (System.currentTimeMillis() - startTime) < 27000) {
-			System.out.println("Player");
 			float[] test = calculatePosition(System.currentTimeMillis() - startTime);
 			while (test == null) {
 				test = calculatePosition(System.currentTimeMillis() - startTime);
@@ -69,16 +49,15 @@ public class ColorIdentifier implements Behavior {
 			while (!this.trundle.getFlag()) {
 				Delay.msDelay(1);
 			}
-		} else if (Math.max(red, Math.max(green, blue)) == blue) {
-			// L
-		} else {
-			float intensity = red + green + blue;
-			if (intensity < 0.5 && (red < 0.15 || green < 0.15 || blue < 0.15)) {
-				System.out.println("Black");
+			
 			} else {
-				System.out.println("Unknown");
+				float intensity = red + green + blue;
+				if (intensity < 0.5 && (red < 0.15 || green < 0.15 || blue < 0.15)) {
+					System.out.println("Black");
+				} else {
+					System.out.println("Unknown");
+				}
 			}
-		}
 	}
 
 	@Override
@@ -146,7 +125,7 @@ public class ColorIdentifier implements Behavior {
 	        }
 	    }
 	    
-	    // System.out.println(time + " " + "Illegal Move Bro.");
+	    
 	    return null;
 	}
 }
