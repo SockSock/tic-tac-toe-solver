@@ -24,6 +24,7 @@ import lejos.robotics.pathfinding.ShortestPathFinder;
 import lejos.robotics.mapping.LineMap;
 import lejos.robotics.navigation.Navigator;
 import lejos.hardware.sensor.EV3ColorSensor;
+import java.util.concurrent.*;
 
 public class Trundle implements Behavior { // 40 secs
 	private EV3TouchSensor touchSensor = new EV3TouchSensor(SensorPort.S2);
@@ -34,13 +35,14 @@ public class Trundle implements Behavior { // 40 secs
 	private PoseProvider poseProvider;
 	private Navigator navigator;
 	private boolean flag = false;
+	private boolean goBack;
 	private long startTime = 0;
 	private long retreat;
 	private float[] samples = new float[1];
 	private final float HALF_METRE_DISTANCE = 380; // 380
 	private final float TEN_CENTIMETRE_DISTANCE = 40; // 40
 	private final float TWENTY_CENTIMETRE_DISTANCE = 60; // 60
-	private final float NINETY_DEGREE_TURN = 210; // 200
+	private final float NINETY_DEGREE_TURN = 200; // 200
 	
 	public Trundle(MovePilot pilot, Map map, PoseProvider poseProvider, Navigator navigator, TicTacToe ticTacToe) {
 		this.pilot = pilot;
@@ -49,6 +51,7 @@ public class Trundle implements Behavior { // 40 secs
 		this.navigator = navigator;
 		this.ticTacToe = ticTacToe;
 		this.retreat = 0;
+		this.goBack = false;
 	}
 
 	@Override
@@ -88,31 +91,49 @@ public class Trundle implements Behavior { // 40 secs
 				pilot.rotate(-NINETY_DEGREE_TURN);
 			}
 			
-			startTime = System.currentTimeMillis();
 			this.retreat = this.ticTacToe.getRetreat();
-			while ((System.currentTimeMillis() - startTime) < this.retreat) {
-			    pilot.travel(HALF_METRE_DISTANCE);			   
-			    pilot.rotate(-NINETY_DEGREE_TURN);
-			    pilot.travel(TEN_CENTIMETRE_DISTANCE);
-			    pilot.rotate(-NINETY_DEGREE_TURN);
-			    pilot.travel(HALF_METRE_DISTANCE);
-			    pilot.rotate(NINETY_DEGREE_TURN);
-			    pilot.travel(TWENTY_CENTIMETRE_DISTANCE);
-			    pilot.rotate(NINETY_DEGREE_TURN);
-			    pilot.travel(HALF_METRE_DISTANCE);
-			    pilot.rotate(NINETY_DEGREE_TURN);
-			    pilot.travel(TEN_CENTIMETRE_DISTANCE);
-			    pilot.travel(TEN_CENTIMETRE_DISTANCE);
-			    pilot.rotate(NINETY_DEGREE_TURN);
-			    pilot.travel(HALF_METRE_DISTANCE);
-			    pilot.rotate(-NINETY_DEGREE_TURN);
-			    pilot.rotate(-NINETY_DEGREE_TURN);
+			
+			final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+			
+			if (this.goBack) {
+				executor.schedule(new Runnable() {
+					@Override
+					public void run() {
+						System.out.println("Destination reached.");
+						executor.shutdownNow();
+						pilot.stop();
+					}
+				}, this.retreat, TimeUnit.MILLISECONDS);
+				
+				try {
+				    executor.awaitTermination(this.retreat + 100, TimeUnit.MILLISECONDS); // Add a buffer time
+				} catch (InterruptedException e) {
+				    e.printStackTrace();
+				}
+				
+				while (!executor.isTerminated()) {
+					pilot.travel(HALF_METRE_DISTANCE);			   
+					pilot.rotate(-NINETY_DEGREE_TURN);
+					pilot.travel(TEN_CENTIMETRE_DISTANCE);
+					pilot.rotate(-NINETY_DEGREE_TURN);
+					pilot.travel(HALF_METRE_DISTANCE);
+					pilot.rotate(NINETY_DEGREE_TURN);
+					pilot.travel(TWENTY_CENTIMETRE_DISTANCE);
+					pilot.rotate(NINETY_DEGREE_TURN);
+					pilot.travel(HALF_METRE_DISTANCE);
+				    pilot.rotate(NINETY_DEGREE_TURN);
+					pilot.travel(TEN_CENTIMETRE_DISTANCE);
+					pilot.travel(TEN_CENTIMETRE_DISTANCE);
+					pilot.rotate(NINETY_DEGREE_TURN);
+					pilot.travel(HALF_METRE_DISTANCE);
+					pilot.rotate(-NINETY_DEGREE_TURN);
+					pilot.rotate(-NINETY_DEGREE_TURN);
+			    }
 			}
 			
 			this.retreat = 0;
+			flag = true;
 		}
-		
-		flag = true;
 	}
 
 	@Override
@@ -126,5 +147,9 @@ public class Trundle implements Behavior { // 40 secs
 	
 	public long getStartTime() {
 		return startTime;
+	}
+	
+	public void setGoBack(boolean goBack) {
+		this.goBack = goBack;
 	}
 }

@@ -183,7 +183,7 @@ public class TicTacToe {
     
     public void getLocationBox(int x, int y) {
     	if (x == 0 && y == 0) {
-    		retreat = 10;
+    		retreat = 300;
     	} else if (x == 0 && y == 1) {
     		retreat = 2111;
     	} else if (x == 0 && y == 2) {

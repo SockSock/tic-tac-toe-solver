@@ -66,6 +66,7 @@ public class ColorIdentifier implements Behavior {
 				test = calculatePosition(System.currentTimeMillis() - startTime);
 			}
 			this.ticTacToe.start(test);
+			this.trundle.setGoBack(true);
 			while (!this.trundle.getFlag()) {
 				Delay.msDelay(1);
 			}
@@ -114,13 +115,13 @@ public class ColorIdentifier implements Behavior {
 	            coords[1] = 2;
 	            return coords;
 	        }
-	    } else if (time > 12828 && time < 14000) {
+	    } else if (time > 12828 && time < 14300) {
 	        if (this.ticTacToe.isValidMove(1, 1)) {
 	            coords[0] = 1;
 	            coords[1] = 1;
 	            return coords;
 	        }
-	    } else if (time > 14000 && time < 15000) {
+	    } else if (time > 14300 && time < 15300) {
 	        if (this.ticTacToe.isValidMove(1, 0)) {
 	            coords[0] = 1;
 	            coords[1] = 0;

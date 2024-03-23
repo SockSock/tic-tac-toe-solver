@@ -45,13 +45,16 @@ public class Driver {
 		
 		EV3ColorSensor sensor = new EV3ColorSensor(SensorPort.S1);
 		SampleProvider color = sensor.getRGBMode();
-		
+		WelcomeScreen welcomeScreen = new WelcomeScreen();
 		final Behavior lowBattery = new LowBattery();
 		final Behavior emergencyStop = new EmergencyStop();
 		final TicTacToe ticTacToe = new TicTacToe();
 		final Map map = new Map(navigator);
 		final Trundle trundle = new Trundle(pilot, map, poseProvider, navigator, ticTacToe);
 		final Behavior colorIdentifier = new ColorIdentifier(color, poseProvider, ticTacToe, trundle);
+		
+		welcomeScreen.displayWelcomeScreen("Jonathan", "Anish", "Arjun", "Version 32");
+		welcomeScreen.waitForButtonPress();
 		
 		new Thread(new Runnable() {
 			public void run() {
