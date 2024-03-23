@@ -12,7 +12,7 @@ public class LowBattery implements Behavior {
 	public boolean takeControl() {
 		if (Battery.getVoltage() <= 6.5) {
 			LCD.drawString("Battery is low bro, you gotta recharge me fr fr", 0, 2);
-			return true;
+			return true;// needs to end program
 		}
 		
 		return false;
