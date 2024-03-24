@@ -39,11 +39,11 @@ public class ColorIdentifier implements Behavior {
 		if (red > 0.18 && red < 0.32 && green > 0.16 && green < 0.30 && blue > 0.16 && blue < 0.30) {
 			// System.out.println("White");
 		} else if (Math.max(red, Math.max(green, blue)) == red && !this.trundle.getFlag() && (System.currentTimeMillis() - startTime) < 27000) {
-			float[] test = calculatePosition(System.currentTimeMillis() - startTime);
-			while (test == null) {
-				test = calculatePosition(System.currentTimeMillis() - startTime);
+			float[] playerCoords = calculatePosition(System.currentTimeMillis() - startTime);
+			while (playerCoords == null) {
+				playerCoords = calculatePosition(System.currentTimeMillis() - startTime);
 			}
-			this.ticTacToe.start(test);
+			this.ticTacToe.start(playerCoords);
 			this.trundle.setGoBack(true);
 			while (!this.trundle.getFlag()) {
 				Delay.msDelay(1);
