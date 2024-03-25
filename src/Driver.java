@@ -50,7 +50,7 @@ public class Driver {
 		final Trundle trundle = new Trundle(pilot, ticTacToe);
 		final Behavior colorIdentifier = new ColorIdentifier(color, ticTacToe, trundle);
 		
-		welcomeScreen.displayWelcomeScreen("Jonathan", "Anish", "Arjun", "Version 32");
+		welcomeScreen.displayWelcomeScreen("Jonathan", "Anish", "Arjun", "Version 33");
 		welcomeScreen.waitForButtonPress();
 		
 		new Thread(new Runnable() {
