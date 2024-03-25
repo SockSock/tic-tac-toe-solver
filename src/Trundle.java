@@ -134,21 +134,21 @@ public class Trundle implements Behavior { // 40 secs
 	}
 	
 	public void getBoxOne() {
-		pilot.travel(NOT_METRE_DISTANCE);
+		pilot.travel(ONE_BOX_DISTANCE);
 	}
 	
 	public void getBoxTwo() {
-		pilot.travel(NOT_METRE_DISTANCE);
-		pilot.travel(NOT_METRE_DISTANCE);
+		pilot.travel(ONE_BOX_DISTANCE);
+		pilot.travel(ONE_BOX_DISTANCE);
 	}
 	
 	public void getBoxThree() {
-		pilot.travel(NOT_METRE_DISTANCE);
-		pilot.travel(NOT_METRE_DISTANCE);
-		pilot.travel(NOT_METRE_DISTANCE);
+		pilot.travel(ONE_BOX_DISTANCE);
+		pilot.travel(ONE_BOX_DISTANCE);
+		pilot.travel(ONE_BOX_DISTANCE);
 	}
 	public void getBoxFour() {
-		pilot.travel(HALF_METRE_DISTANCE);
+		pilot.travel(THREE_BOX_DISTANCE);
 		pilot.rotate(-NINETY_DEGREE_TURN);
 		pilot.travel(TEN_CENTIMETRE_DISTANCE);
 		pilot.rotate(-NINETY_DEGREE_TURN);
@@ -156,60 +156,60 @@ public class Trundle implements Behavior { // 40 secs
 	}
 	
 	public void getBoxFive() {
-		pilot.travel(HALF_METRE_DISTANCE);
+		pilot.travel(THREE_BOX_DISTANCE);
 		pilot.rotate(-NINETY_DEGREE_TURN);
 		pilot.travel(TEN_CENTIMETRE_DISTANCE);
 		pilot.rotate(-NINETY_DEGREE_TURN);
-		pilot.travel(NOT_METRE_DISTANCE);
-		pilot.travel(NOT_METRE_DISTANCE);
+		pilot.travel(ONE_BOX_DISTANCE);
+		pilot.travel(ONE_BOX_DISTANCE);
 	}
 	
 	public void getBoxSix() {
-		pilot.travel(HALF_METRE_DISTANCE);
+		pilot.travel(THREE_BOX_DISTANCE);
 		pilot.rotate(-NINETY_DEGREE_TURN);
 		pilot.travel(TEN_CENTIMETRE_DISTANCE);
 		pilot.rotate(-NINETY_DEGREE_TURN);
-		pilot.travel(NOT_METRE_DISTANCE);
-		pilot.travel(NOT_METRE_DISTANCE);
-		pilot.travel(NOT_METRE_DISTANCE);
+		pilot.travel(ONE_BOX_DISTANCE);
+		pilot.travel(ONE_BOX_DISTANCE);
+		pilot.travel(ONE_BOX_DISTANCE);
 		
 	}
 	public void getBoxSeven() {
-		pilot.travel(HALF_METRE_DISTANCE);
+		pilot.travel(THREE_BOX_DISTANCE);
 		pilot.rotate(-NINETY_DEGREE_TURN);
 		pilot.travel(TEN_CENTIMETRE_DISTANCE);
 		pilot.rotate(-NINETY_DEGREE_TURN);
-		pilot.travel(HALF_METRE_DISTANCE);
+		pilot.travel(THREE_BOX_DISTANCE);
 		pilot.rotate(NINETY_DEGREE_TURN);
 		pilot.travel(TWENTY_CENTIMETRE_DISTANCE);
 		pilot.rotate(NINETY_DEGREE_TURN);
-		pilot.travel(NOT_METRE_DISTANCE);
+		pilot.travel(ONE_BOX_DISTANCE);
 	}
 	public void getBoxEight() {
-		pilot.travel(HALF_METRE_DISTANCE);
+		pilot.travel(THREE_BOX_DISTANCE);
 		pilot.rotate(-NINETY_DEGREE_TURN);
 		pilot.travel(TEN_CENTIMETRE_DISTANCE);
 		pilot.rotate(-NINETY_DEGREE_TURN);
-		pilot.travel(HALF_METRE_DISTANCE);
+		pilot.travel(THREE_BOX_DISTANCE);
 		pilot.rotate(NINETY_DEGREE_TURN);
 		pilot.travel(TWENTY_CENTIMETRE_DISTANCE);
 		pilot.rotate(NINETY_DEGREE_TURN);
-		pilot.travel(NOT_METRE_DISTANCE);
-		pilot.travel(NOT_METRE_DISTANCE);
+		pilot.travel(ONE_BOX_DISTANCE);
+		pilot.travel(ONE_BOX_DISTANCE);
 
 	}
 	public void getBoxNine() {
-		pilot.travel(HALF_METRE_DISTANCE);
+		pilot.travel(THREE_BOX_DISTANCE);
 		pilot.rotate(-NINETY_DEGREE_TURN);
 		pilot.travel(TEN_CENTIMETRE_DISTANCE);
 		pilot.rotate(-NINETY_DEGREE_TURN);
-		pilot.travel(HALF_METRE_DISTANCE);
+		pilot.travel(THREE_BOX_DISTANCE);
 		pilot.rotate(NINETY_DEGREE_TURN);
 		pilot.travel(TWENTY_CENTIMETRE_DISTANCE);
 		pilot.rotate(NINETY_DEGREE_TURN);
-		pilot.travel(NOT_METRE_DISTANCE);
-		pilot.travel(NOT_METRE_DISTANCE);
-		pilot.travel(NOT_METRE_DISTANCE);
+		pilot.travel(ONE_BOX_DISTANCE);
+		pilot.travel(ONE_BOX_DISTANCE);
+		pilot.travel(ONE_BOX_DISTANCE);
 	}
 	
 }
