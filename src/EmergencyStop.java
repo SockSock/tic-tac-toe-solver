@@ -1,4 +1,4 @@
-import lejos.hardware.port.SensorPort;
+import lejos.hardware.port.SensorPort
 import lejos.hardware.sensor.NXTSoundSensor;
 import lejos.robotics.SampleProvider;
 import lejos.robotics.subsumption.Behavior;

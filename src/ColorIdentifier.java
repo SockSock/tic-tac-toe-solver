@@ -1,4 +1,4 @@
-import lejos.robotics.subsumption.Arbitrator;
+import lejos.robotics.subsumption.Arbitrator
 import lejos.robotics.subsumption.Behavior;
 import lejos.hardware.port.SensorPort;
 import lejos.robotics.SampleProvider;
