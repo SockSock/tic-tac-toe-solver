@@ -32,7 +32,7 @@ public class TicTacToe {
     };
     private char currentPlayer = 'X'; // Red
     private char computerPlayer = 'O'; // Blue
-    private long retreat = 0;
+    private String retreat = "";
     
     public TicTacToe() {
     	
@@ -183,27 +183,27 @@ public class TicTacToe {
     
     public void getLocationBox(int x, int y) {
     	if (x == 0 && y == 0) {
-    		retreat = 300;
+    		retreat = "boxOne";
     	} else if (x == 0 && y == 1) {
-    		retreat = 2111;
+    		retreat = "boxTwo";
     	} else if (x == 0 && y == 2) {
-    		retreat = 2900;
+    		retreat = "boxThree";
     	} else if (x == 1 && y == 2) {
-    		retreat = 11828;
+    		retreat = "boxFour";
     	} else if (x == 1 && y == 1) {
-    		retreat = 12828;
+    		retreat = "boxFive";
     	} else if (x == 1 && y == 0) {
-    		retreat = 14000;
+    		retreat = "boxSix";
     	} else if (x == 2 && y == 0) {
-    		retreat = 23000;
+    		retreat = "boxSeven";
     	} else if (x == 2 && y == 1) {
-    		retreat = 24000;
+    		retreat = "boxEight";
     	} else if (x == 2 && y == 2) {
-    		retreat = 25000;
+    		retreat = "boxNine";
     	}
     }
     
-    public long getRetreat() {
+    public String getRetreat() {
     	return retreat;
     }
 }

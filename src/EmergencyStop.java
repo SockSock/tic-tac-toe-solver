@@ -20,7 +20,6 @@ public class EmergencyStop implements Behavior {
     public boolean takeControl() {
         soundProvider.fetchSample(sample, 0);
         float soundLevel = sample[0];
-
         return soundLevel > SOUND_THRESHOLD;
     }
 

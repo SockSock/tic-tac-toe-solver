@@ -49,14 +49,7 @@ public class ColorIdentifier implements Behavior {
 				Delay.msDelay(1);
 			}
 			
-			} else {
-				float intensity = red + green + blue;
-				if (intensity < 0.5 && (red < 0.15 || green < 0.15 || blue < 0.15)) {
-					System.out.println("Black");
-				} else {
-					System.out.println("Unknown");
-				}
-			}
+		} 			
 	}
 
 	@Override
@@ -66,7 +59,7 @@ public class ColorIdentifier implements Behavior {
 	
 	private float[] calculatePosition(long time) {   
 	    float[] coords = new float[2];
-	    System.out.println(time);
+	    
 	    
 	    if (time > 10 && time < 2111) {
 	        if (this.ticTacToe.isValidMove(0, 0)) {

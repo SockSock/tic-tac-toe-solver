@@ -34,9 +34,10 @@ public class Trundle implements Behavior { // 40 secs
 	private boolean flag = false;
 	private boolean goBack;
 	private long startTime = 0;
-	private long retreat;
+	private String retreat;
 	private float[] samples = new float[1];
-	private final float HALF_METRE_DISTANCE = 380; // 380
+	private final float THREE_BOX_DISTANCE = 380; // 380
+	private final float ONE_BOX_DISTANCE = 85; // 380
 	private final float TEN_CENTIMETRE_DISTANCE = 40; // 40
 	private final float TWENTY_CENTIMETRE_DISTANCE = 60; // 60
 	private final float NINETY_DEGREE_TURN = 200; // 200
@@ -44,7 +45,7 @@ public class Trundle implements Behavior { // 40 secs
 	public Trundle(MovePilot pilot, TicTacToe ticTacToe) {
 		this.pilot = pilot;
 		this.ticTacToe = ticTacToe;
-		this.retreat = 0;
+		this.retreat = "";
 		this.goBack = false;
 	}
 
@@ -67,54 +68,50 @@ public class Trundle implements Behavior { // 40 secs
 			for (int i = 0; i < 1; i++) { // The most useful for loop in the entire world (based based).
 				startTime = System.currentTimeMillis();
 				
-				pilot.travel(HALF_METRE_DISTANCE);
+				pilot.travel(THREE_BOX_DISTANCE);
 				pilot.rotate(-NINETY_DEGREE_TURN);
 				pilot.travel(TEN_CENTIMETRE_DISTANCE);
 				pilot.rotate(-NINETY_DEGREE_TURN);
-				pilot.travel(HALF_METRE_DISTANCE);
+				pilot.travel(THREE_BOX_DISTANCE);
 				pilot.rotate(NINETY_DEGREE_TURN);
 				pilot.travel(TWENTY_CENTIMETRE_DISTANCE);
 				pilot.rotate(NINETY_DEGREE_TURN);
-				pilot.travel(HALF_METRE_DISTANCE);
+				pilot.travel(THREE_BOX_DISTANCE);
 				pilot.rotate(NINETY_DEGREE_TURN);
 				pilot.travel(TEN_CENTIMETRE_DISTANCE);
 				pilot.travel(TEN_CENTIMETRE_DISTANCE);
 				pilot.rotate(NINETY_DEGREE_TURN);
-				pilot.travel(HALF_METRE_DISTANCE);
+				pilot.travel(THREE_BOX_DISTANCE);
 				pilot.rotate(-NINETY_DEGREE_TURN);
 				pilot.rotate(-NINETY_DEGREE_TURN);
 			}
 			
 			this.retreat = this.ticTacToe.getRetreat();
-			
-			final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-			
-			if (this.goBack) {
-				executor.schedule(new Runnable() {
-					@Override
-					public void run() {
-						pilot.travel(HALF_METRE_DISTANCE);			   
-						pilot.rotate(-NINETY_DEGREE_TURN);
-						pilot.travel(TEN_CENTIMETRE_DISTANCE);
-						pilot.rotate(-NINETY_DEGREE_TURN);
-						pilot.travel(HALF_METRE_DISTANCE);
-						pilot.rotate(NINETY_DEGREE_TURN);
-						pilot.travel(TWENTY_CENTIMETRE_DISTANCE);
-						pilot.rotate(NINETY_DEGREE_TURN);
-						pilot.travel(HALF_METRE_DISTANCE);
-					    pilot.rotate(NINETY_DEGREE_TURN);
-						pilot.travel(TEN_CENTIMETRE_DISTANCE);
-						pilot.travel(TEN_CENTIMETRE_DISTANCE);
-						pilot.rotate(NINETY_DEGREE_TURN);
-						pilot.travel(HALF_METRE_DISTANCE);
-						pilot.rotate(-NINETY_DEGREE_TURN);
-						pilot.rotate(-NINETY_DEGREE_TURN);
-						executor.shutdownNow();
-					}
-				}, this.retreat, TimeUnit.MILLISECONDS);
+			if(this.goBack) {
+				if(this.retreat.equals("boxOne")) {
+					getBoxOne();
+				}else if (this.retreat.equals("boxTwo")) {
+					getBoxTwo();
+				}else if (this.retreat.equals("boxThree")) {
+					getBoxThree();
+				}else if (this.retreat.equals("boxFour")) {
+					getBoxFour();
+				}else if (this.retreat.equals("boxFive")) {
+					getBoxFive();
+				}else if (this.retreat.equals("boxSix")) {
+					getBoxSix();
+				}else if (this.retreat.equals("boxSeven")) {
+					getBoxSeven();
+				}else if (this.retreat.equals("boxEight")) {
+					getBoxEight();
+				}else if (this.retreat.equals("boxNine")) {
+					getBoxNine();
+				}
+				
 			}
 			
-			this.retreat = 0;
+			
+			this.retreat = "";
 			flag = true;
 		}
 	}
@@ -135,4 +132,84 @@ public class Trundle implements Behavior { // 40 secs
 	public void setGoBack(boolean goBack) {
 		this.goBack = goBack;
 	}
+	
+	public void getBoxOne() {
+		pilot.travel(NOT_METRE_DISTANCE);
+	}
+	
+	public void getBoxTwo() {
+		pilot.travel(NOT_METRE_DISTANCE);
+		pilot.travel(NOT_METRE_DISTANCE);
+	}
+	
+	public void getBoxThree() {
+		pilot.travel(NOT_METRE_DISTANCE);
+		pilot.travel(NOT_METRE_DISTANCE);
+		pilot.travel(NOT_METRE_DISTANCE);
+	}
+	public void getBoxFour() {
+		pilot.travel(HALF_METRE_DISTANCE);
+		pilot.rotate(-NINETY_DEGREE_TURN);
+		pilot.travel(TEN_CENTIMETRE_DISTANCE);
+		pilot.rotate(-NINETY_DEGREE_TURN);
+		pilot.travel(TEN_CENTIMETRE_DISTANCE);
+	}
+	
+	public void getBoxFive() {
+		pilot.travel(HALF_METRE_DISTANCE);
+		pilot.rotate(-NINETY_DEGREE_TURN);
+		pilot.travel(TEN_CENTIMETRE_DISTANCE);
+		pilot.rotate(-NINETY_DEGREE_TURN);
+		pilot.travel(NOT_METRE_DISTANCE);
+		pilot.travel(NOT_METRE_DISTANCE);
+	}
+	
+	public void getBoxSix() {
+		pilot.travel(HALF_METRE_DISTANCE);
+		pilot.rotate(-NINETY_DEGREE_TURN);
+		pilot.travel(TEN_CENTIMETRE_DISTANCE);
+		pilot.rotate(-NINETY_DEGREE_TURN);
+		pilot.travel(NOT_METRE_DISTANCE);
+		pilot.travel(NOT_METRE_DISTANCE);
+		pilot.travel(NOT_METRE_DISTANCE);
+		
+	}
+	public void getBoxSeven() {
+		pilot.travel(HALF_METRE_DISTANCE);
+		pilot.rotate(-NINETY_DEGREE_TURN);
+		pilot.travel(TEN_CENTIMETRE_DISTANCE);
+		pilot.rotate(-NINETY_DEGREE_TURN);
+		pilot.travel(HALF_METRE_DISTANCE);
+		pilot.rotate(NINETY_DEGREE_TURN);
+		pilot.travel(TWENTY_CENTIMETRE_DISTANCE);
+		pilot.rotate(NINETY_DEGREE_TURN);
+		pilot.travel(NOT_METRE_DISTANCE);
+	}
+	public void getBoxEight() {
+		pilot.travel(HALF_METRE_DISTANCE);
+		pilot.rotate(-NINETY_DEGREE_TURN);
+		pilot.travel(TEN_CENTIMETRE_DISTANCE);
+		pilot.rotate(-NINETY_DEGREE_TURN);
+		pilot.travel(HALF_METRE_DISTANCE);
+		pilot.rotate(NINETY_DEGREE_TURN);
+		pilot.travel(TWENTY_CENTIMETRE_DISTANCE);
+		pilot.rotate(NINETY_DEGREE_TURN);
+		pilot.travel(NOT_METRE_DISTANCE);
+		pilot.travel(NOT_METRE_DISTANCE);
+
+	}
+	public void getBoxNine() {
+		pilot.travel(HALF_METRE_DISTANCE);
+		pilot.rotate(-NINETY_DEGREE_TURN);
+		pilot.travel(TEN_CENTIMETRE_DISTANCE);
+		pilot.rotate(-NINETY_DEGREE_TURN);
+		pilot.travel(HALF_METRE_DISTANCE);
+		pilot.rotate(NINETY_DEGREE_TURN);
+		pilot.travel(TWENTY_CENTIMETRE_DISTANCE);
+		pilot.rotate(NINETY_DEGREE_TURN);
+		pilot.travel(NOT_METRE_DISTANCE);
+		pilot.travel(NOT_METRE_DISTANCE);
+		pilot.travel(NOT_METRE_DISTANCE);
+	}
+	
 }
