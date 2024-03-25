@@ -8,7 +8,7 @@ public class WelcomeScreen {
 	}
 
     public void displayWelcomeScreen(String author1, String author2, String author3, String version) {
-        LCD.drawString("Welcome!", 2, 0);
+        LCD.drawString("Welcome!", 4, 0);
         LCD.drawString("Authors:", 1, 2);
         LCD.drawString(author1, 1, 3);
         LCD.drawString(author2, 1, 4);

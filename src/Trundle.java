@@ -27,8 +27,9 @@ import lejos.hardware.sensor.EV3ColorSensor;
 import java.util.concurrent.*;
 
 public class Trundle implements Behavior { // 40 secs
-	private EV3TouchSensor touchSensor = new EV3TouchSensor(SensorPort.S2);
+	private EV3TouchSensor touchSensor = new EV3TouchSensor(SensorPort.S3);
 	private SampleProvider touch = touchSensor.getTouchMode();
+	private BaseRegulatedMotor arm;
 	private MovePilot pilot;
 	private TicTacToe ticTacToe;
 	private boolean flag = false;
@@ -37,14 +38,15 @@ public class Trundle implements Behavior { // 40 secs
 	private String retreat;
 	private float[] samples = new float[1];
 	private final float THREE_BOX_DISTANCE = 380; // 380
-	private final float ONE_BOX_DISTANCE = 85; // 380
+	private final float ONE_BOX_DISTANCE = 65; // 380
 	private final float TEN_CENTIMETRE_DISTANCE = 40; // 40
-	private final float TWENTY_CENTIMETRE_DISTANCE = 60; // 60
+	private final float HALF_BOX_DISTANCE = 50; // 50
 	private final float NINETY_DEGREE_TURN = 200; // 200
 	
-	public Trundle(MovePilot pilot, TicTacToe ticTacToe) {
+	public Trundle(MovePilot pilot, TicTacToe ticTacToe, BaseRegulatedMotor arm) {
 		this.pilot = pilot;
 		this.ticTacToe = ticTacToe;
+		this.arm = arm;
 		this.retreat = "";
 		this.goBack = false;
 	}
@@ -68,16 +70,21 @@ public class Trundle implements Behavior { // 40 secs
 			for (int i = 0; i < 1; i++) { // The most useful for loop in the entire world (based based).
 				startTime = System.currentTimeMillis();
 				
+//				arm.rotate(120);
+//				arm.rotate(-120);
+				
 				pilot.travel(THREE_BOX_DISTANCE);
 				pilot.rotate(-NINETY_DEGREE_TURN);
+				pilot.travel(TEN_CENTIMETRE_DISTANCE);
 				pilot.travel(TEN_CENTIMETRE_DISTANCE);
 				pilot.rotate(-NINETY_DEGREE_TURN);
 				pilot.travel(THREE_BOX_DISTANCE);
 				pilot.rotate(NINETY_DEGREE_TURN);
-				pilot.travel(TWENTY_CENTIMETRE_DISTANCE);
+				pilot.travel(TEN_CENTIMETRE_DISTANCE);
 				pilot.rotate(NINETY_DEGREE_TURN);
 				pilot.travel(THREE_BOX_DISTANCE);
 				pilot.rotate(NINETY_DEGREE_TURN);
+				pilot.travel(TEN_CENTIMETRE_DISTANCE);
 				pilot.travel(TEN_CENTIMETRE_DISTANCE);
 				pilot.travel(TEN_CENTIMETRE_DISTANCE);
 				pilot.rotate(NINETY_DEGREE_TURN);
@@ -134,34 +141,61 @@ public class Trundle implements Behavior { // 40 secs
 	}
 	
 	public void getBoxOne() {
-		pilot.travel(ONE_BOX_DISTANCE);
+		arm.rotate(90);
+		pilot.travel(HALF_BOX_DISTANCE);
+		arm.rotate(-90);
+		pilot.travel(-HALF_BOX_DISTANCE);
+		
 	}
+	
 	
 	public void getBoxTwo() {
 		pilot.travel(ONE_BOX_DISTANCE);
-		pilot.travel(ONE_BOX_DISTANCE);
+		arm.rotate(90);
+		pilot.travel(HALF_BOX_DISTANCE);
+		arm.rotate(-90);
+		pilot.travel(-ONE_BOX_DISTANCE);
+		pilot.travel(-HALF_BOX_DISTANCE);
 	}
 	
 	public void getBoxThree() {
 		pilot.travel(ONE_BOX_DISTANCE);
 		pilot.travel(ONE_BOX_DISTANCE);
-		pilot.travel(ONE_BOX_DISTANCE);
-	}
-	public void getBoxFour() {
-		pilot.travel(THREE_BOX_DISTANCE);
-		pilot.rotate(-NINETY_DEGREE_TURN);
-		pilot.travel(TEN_CENTIMETRE_DISTANCE);
-		pilot.rotate(-NINETY_DEGREE_TURN);
-		pilot.travel(TEN_CENTIMETRE_DISTANCE);
+		arm.rotate(90);
+		pilot.travel(HALF_BOX_DISTANCE);
+		arm.rotate(-90);
+		pilot.travel(-ONE_BOX_DISTANCE);
+		pilot.travel(-ONE_BOX_DISTANCE);
+		pilot.travel(-HALF_BOX_DISTANCE);
 	}
 	
+	public void getBoxFour() {
+		pilot.travel(ONE_BOX_DISTANCE);
+		pilot.travel(ONE_BOX_DISTANCE);
+		pilot.travel(ONE_BOX_DISTANCE);
+		arm.rotate(90);
+		pilot.travel(HALF_BOX_DISTANCE);
+		arm.rotate(-90);
+		pilot.travel(-ONE_BOX_DISTANCE);
+		pilot.travel(-ONE_BOX_DISTANCE);
+		pilot.travel(-ONE_BOX_DISTANCE);
+		pilot.travel(-HALF_BOX_DISTANCE);
+	}
 	public void getBoxFive() {
 		pilot.travel(THREE_BOX_DISTANCE);
 		pilot.rotate(-NINETY_DEGREE_TURN);
 		pilot.travel(TEN_CENTIMETRE_DISTANCE);
 		pilot.rotate(-NINETY_DEGREE_TURN);
-		pilot.travel(ONE_BOX_DISTANCE);
-		pilot.travel(ONE_BOX_DISTANCE);
+		pilot.travel(TEN_CENTIMETRE_DISTANCE);
+		arm.rotate(90);
+		pilot.travel(HALF_BOX_DISTANCE);
+		arm.rotate(-90);
+		pilot.travel(-THREE_BOX_DISTANCE);
+		pilot.rotate(NINETY_DEGREE_TURN);
+		pilot.travel(-TEN_CENTIMETRE_DISTANCE);
+		pilot.rotate(NINETY_DEGREE_TURN);
+		pilot.travel(-TEN_CENTIMETRE_DISTANCE);
+		pilot.travel(-HALF_BOX_DISTANCE);
 	}
 	
 	public void getBoxSix() {
@@ -171,19 +205,38 @@ public class Trundle implements Behavior { // 40 secs
 		pilot.rotate(-NINETY_DEGREE_TURN);
 		pilot.travel(ONE_BOX_DISTANCE);
 		pilot.travel(ONE_BOX_DISTANCE);
-		pilot.travel(ONE_BOX_DISTANCE);
-		
+		arm.rotate(90);
+		pilot.travel(HALF_BOX_DISTANCE);
+		arm.rotate(-90);
+		pilot.travel(-THREE_BOX_DISTANCE);
+		pilot.rotate(NINETY_DEGREE_TURN);
+		pilot.travel(-TEN_CENTIMETRE_DISTANCE);
+		pilot.rotate(NINETY_DEGREE_TURN);
+		pilot.travel(-ONE_BOX_DISTANCE);
+		pilot.travel(-ONE_BOX_DISTANCE);
+		pilot.travel(-HALF_BOX_DISTANCE);
 	}
+	
 	public void getBoxSeven() {
 		pilot.travel(THREE_BOX_DISTANCE);
 		pilot.rotate(-NINETY_DEGREE_TURN);
 		pilot.travel(TEN_CENTIMETRE_DISTANCE);
 		pilot.rotate(-NINETY_DEGREE_TURN);
-		pilot.travel(THREE_BOX_DISTANCE);
-		pilot.rotate(NINETY_DEGREE_TURN);
-		pilot.travel(TWENTY_CENTIMETRE_DISTANCE);
-		pilot.rotate(NINETY_DEGREE_TURN);
 		pilot.travel(ONE_BOX_DISTANCE);
+		pilot.travel(ONE_BOX_DISTANCE);
+		pilot.travel(ONE_BOX_DISTANCE);
+		arm.rotate(90);
+		pilot.travel(HALF_BOX_DISTANCE);
+		arm.rotate(-90);
+		pilot.travel(-THREE_BOX_DISTANCE);
+		pilot.rotate(NINETY_DEGREE_TURN);
+		pilot.travel(-TEN_CENTIMETRE_DISTANCE);
+		pilot.rotate(NINETY_DEGREE_TURN);
+		pilot.travel(-ONE_BOX_DISTANCE);
+		pilot.travel(-ONE_BOX_DISTANCE);
+		pilot.travel(-ONE_BOX_DISTANCE);
+		pilot.travel(-HALF_BOX_DISTANCE);
+		
 	}
 	public void getBoxEight() {
 		pilot.travel(THREE_BOX_DISTANCE);
@@ -192,11 +245,22 @@ public class Trundle implements Behavior { // 40 secs
 		pilot.rotate(-NINETY_DEGREE_TURN);
 		pilot.travel(THREE_BOX_DISTANCE);
 		pilot.rotate(NINETY_DEGREE_TURN);
-		pilot.travel(TWENTY_CENTIMETRE_DISTANCE);
+		pilot.travel(TEN_CENTIMETRE_DISTANCE);
 		pilot.rotate(NINETY_DEGREE_TURN);
 		pilot.travel(ONE_BOX_DISTANCE);
-		pilot.travel(ONE_BOX_DISTANCE);
-
+		arm.rotate(90);
+		pilot.travel(HALF_BOX_DISTANCE);
+		arm.rotate(-90);
+		pilot.travel(-THREE_BOX_DISTANCE);
+		pilot.rotate(NINETY_DEGREE_TURN);
+		pilot.travel(-TEN_CENTIMETRE_DISTANCE);
+		pilot.rotate(NINETY_DEGREE_TURN);
+		pilot.travel(-THREE_BOX_DISTANCE);
+		pilot.rotate(-NINETY_DEGREE_TURN);
+		pilot.travel(-TEN_CENTIMETRE_DISTANCE);
+		pilot.rotate(-NINETY_DEGREE_TURN);
+		pilot.travel(-ONE_BOX_DISTANCE);
+		pilot.travel(-HALF_BOX_DISTANCE);
 	}
 	public void getBoxNine() {
 		pilot.travel(THREE_BOX_DISTANCE);
@@ -205,11 +269,26 @@ public class Trundle implements Behavior { // 40 secs
 		pilot.rotate(-NINETY_DEGREE_TURN);
 		pilot.travel(THREE_BOX_DISTANCE);
 		pilot.rotate(NINETY_DEGREE_TURN);
-		pilot.travel(TWENTY_CENTIMETRE_DISTANCE);
+		pilot.travel(TEN_CENTIMETRE_DISTANCE);
 		pilot.rotate(NINETY_DEGREE_TURN);
 		pilot.travel(ONE_BOX_DISTANCE);
 		pilot.travel(ONE_BOX_DISTANCE);
-		pilot.travel(ONE_BOX_DISTANCE);
+		arm.rotate(90);
+		pilot.travel(HALF_BOX_DISTANCE);
+		arm.rotate(-90);
+		pilot.travel(-THREE_BOX_DISTANCE);
+		pilot.rotate(NINETY_DEGREE_TURN);
+		pilot.travel(-TEN_CENTIMETRE_DISTANCE);
+		pilot.rotate(NINETY_DEGREE_TURN);
+		pilot.travel(-THREE_BOX_DISTANCE);
+		pilot.rotate(-NINETY_DEGREE_TURN);
+		pilot.travel(-TEN_CENTIMETRE_DISTANCE);
+		pilot.rotate(-NINETY_DEGREE_TURN);
+		pilot.travel(-ONE_BOX_DISTANCE);
+		pilot.travel(-ONE_BOX_DISTANCE);
+		pilot.travel(-HALF_BOX_DISTANCE);
+
 	}
+
 	
 }

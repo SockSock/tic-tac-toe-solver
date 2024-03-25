@@ -1,3 +1,4 @@
+import lejos.hardware.Button;
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.NXTSoundSensor;
 import lejos.robotics.SampleProvider;
@@ -20,7 +21,7 @@ public class EmergencyStop implements Behavior {
     public boolean takeControl() {
         soundProvider.fetchSample(sample, 0);
         float soundLevel = sample[0];
-        return soundLevel > SOUND_THRESHOLD;
+        return soundLevel > SOUND_THRESHOLD || Button.ESCAPE.isDown();
     }
 
     @Override

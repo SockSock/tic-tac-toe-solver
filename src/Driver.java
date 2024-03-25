@@ -41,13 +41,16 @@ public class Driver {
 		pilot.setLinearSpeed(LINEAR_SPEED);
 		pilot.setAngularSpeed(ANGULAR_SPEED);
 		
+		BaseRegulatedMotor arm = new EV3LargeRegulatedMotor(MotorPort.C);
+		arm.setSpeed(100);
+		
 		EV3ColorSensor sensor = new EV3ColorSensor(SensorPort.S1);
 		SampleProvider color = sensor.getRGBMode();
 		WelcomeScreen welcomeScreen = new WelcomeScreen();
 		final Behavior lowBattery = new LowBattery();
 		final Behavior emergencyStop = new EmergencyStop();
 		final TicTacToe ticTacToe = new TicTacToe();
-		final Trundle trundle = new Trundle(pilot, ticTacToe);
+		final Trundle trundle = new Trundle(pilot, ticTacToe, arm);
 		final Behavior colorIdentifier = new ColorIdentifier(color, ticTacToe, trundle);
 		
 		welcomeScreen.displayWelcomeScreen("Jonathan", "Anish", "Arjun", "Version 33");
