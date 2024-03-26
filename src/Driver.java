@@ -42,7 +42,7 @@ public class Driver {
 		pilot.setAngularSpeed(ANGULAR_SPEED);
 		
 		BaseRegulatedMotor arm = new EV3LargeRegulatedMotor(MotorPort.C);
-		arm.setSpeed(100);
+		arm.setSpeed(720);
 		
 		EV3ColorSensor sensor = new EV3ColorSensor(SensorPort.S1);
 		SampleProvider color = sensor.getRGBMode();

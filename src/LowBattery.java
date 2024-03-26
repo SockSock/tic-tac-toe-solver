@@ -11,7 +11,7 @@ public class LowBattery implements Behavior {
 	
 	@Override
 	public boolean takeControl() {
-		if (Battery.getVoltage() <= 6.5) {
+		if (Battery.getVoltage() <= -6.5) { // 6.5
 			LCD.clear();
 			LCD.drawString("Battery is low :[", 0, 2);
 			Delay.msDelay(5000);

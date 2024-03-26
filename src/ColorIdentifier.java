@@ -61,55 +61,55 @@ public class ColorIdentifier implements Behavior {
 	    float[] coords = new float[2];
 	    
 	    
-	    if (time > 10 && time < 2111) {
+	    if (time > 10 && time < 2380) {
 	        if (this.ticTacToe.isValidMove(0, 0)) {
 	            coords[0] = 0;
 	            coords[1] = 0;
 	            return coords;
 	        }
-	    } else if (time > 2111 && time < 2900) {
+	    } else if (time > 2380 && time < 3820) {
 	        if (this.ticTacToe.isValidMove(0, 1)) {
 	            coords[0] = 0;
 	            coords[1] = 1;
 	            return coords;
 	        }
-	    } else if (time > 2900 && time < 4122) {
+	    } else if (time > 3820 && time < 4980) {
 	        if (this.ticTacToe.isValidMove(0, 2)) {
 	            coords[0] = 0;
 	            coords[1] = 2;
 	            return coords;
 	        }
-	    } else if (time > 11828 && time < 12828) {
+	    } else if (time > 7930 && time < 12630 ) {
 	        if (this.ticTacToe.isValidMove(1, 2)) {
 	            coords[0] = 1;
 	            coords[1] = 2;
 	            return coords;
 	        }
-	    } else if (time > 12828 && time < 14300) {
+	    } else if (time > 12630 && time < 15160) {
 	        if (this.ticTacToe.isValidMove(1, 1)) {
 	            coords[0] = 1;
 	            coords[1] = 1;
 	            return coords;
 	        }
-	    } else if (time > 14300 && time < 15300) {
+	    } else if (time > 15160 && time < 15920) {
 	        if (this.ticTacToe.isValidMove(1, 0)) {
 	            coords[0] = 1;
 	            coords[1] = 0;
 	            return coords;
 	        }
-	    } else if (time > 23000 && time < 24000) {
+	    } else if (time > 25220 && time < 26760) {
 	        if (this.ticTacToe.isValidMove(2, 0)) {
 	            coords[0] = 2;
 	            coords[1] = 0;
 	            return coords;
 	        }
-	    } else if (time > 24000 && time < 25000) {
+	    } else if (time > 26760 && time < 28230) {
 	        if (this.ticTacToe.isValidMove(2, 1)) {
 	            coords[0] = 2;
 	            coords[1] = 1;
 	            return coords;
 	        }
-	    } else if (time > 25000 && time < 26000) {
+	    } else if (time > 28230 && time < 29580) {
 	        if (this.ticTacToe.isValidMove(2, 2)) {
 	            coords[0] = 2;
 	            coords[1] = 2;

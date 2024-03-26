@@ -49,12 +49,12 @@ public class TicTacToe {
                  if (isWinner(board, currentPlayer)) {// checks for wins or draws
                      printBoard();
                      System.out.println("Player X wins!");
-                     Delay.msDelay(5000);
+                     Delay.msDelay(130000);
                      System.exit(-1);
                  } else if (isBoardFull(board)) {
                      printBoard();
                      System.out.println("It's a draw!");
-                     Delay.msDelay(5000);
+                     Delay.msDelay(130000);
                      System.exit(-1);
                  }
                  currentPlayer = 'O';
@@ -69,12 +69,12 @@ public class TicTacToe {
            if (isWinner(board, computerPlayer)) {// checks if anyone won yet
                printBoard();
                System.out.println("Player O wins!");
-               Delay.msDelay(5000);
+               Delay.msDelay(130000);
                System.exit(-1);
            } else if (isBoardFull(board)) {
                printBoard();
                System.out.println("It's a draw!");
-               Delay.msDelay(5000);
+               Delay.msDelay(130000);
                System.exit(-1);
            }
            currentPlayer = 'X';
@@ -87,7 +87,6 @@ public class TicTacToe {
     }
     private int[] minimax(char[][] currentBoard, char player) {// minimax algorithm implementation
         int[] result = new int[]{-1, -1, (player == computerPlayer) ? Integer.MIN_VALUE : Integer.MAX_VALUE};
-        char opponent = (player == 'X') ? 'O' : 'X';
 
         if (isWinner(currentBoard, computerPlayer)) {
             result[2] = 1;
