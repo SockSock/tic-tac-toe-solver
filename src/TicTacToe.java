@@ -1,4 +1,4 @@
-import lejos.utility.Delay
+import lejos.utility.Delay;
 
 public class TicTacToe {
     private char[][] board = { // create the playing board

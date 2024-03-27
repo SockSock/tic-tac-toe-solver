@@ -1,5 +1,5 @@
 import lejos.hardware.Battery;
-import lejos.hardware.Sound
+import lejos.hardware.Sound;
 import lejos.hardware.lcd.LCD;
 import lejos.robotics.subsumption.Behavior;
 import lejos.utility.Delay;
