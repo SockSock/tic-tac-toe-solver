@@ -1,4 +1,4 @@
-import lejos.hardware.Button;
+import lejos.hardware.Button
 import lejos.hardware.port.SensorPort;
 import lejos.hardware.sensor.NXTSoundSensor;
 import lejos.robotics.SampleProvider;
