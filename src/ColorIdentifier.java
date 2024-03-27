@@ -34,11 +34,9 @@ public class ColorIdentifier implements Behavior {
 		green = level[1];
 		blue = level[2];
 		
-		// System.out.println(red + " " + green + " " + blue);
-		
-		if (red > 0.18 && red < 0.32 && green > 0.16 && green < 0.30 && blue > 0.16 && blue < 0.30) {
-			// System.out.println("White");
-		} else if (Math.max(red, Math.max(green, blue)) == red && !this.trundle.getFlag() && (System.currentTimeMillis() - startTime) < 27000) {
+
+
+		if (Math.max(red, Math.max(green, blue)) == red && !this.trundle.getFlag() && (System.currentTimeMillis() - startTime) < 27000) {
 			float[] playerCoords = calculatePosition(System.currentTimeMillis() - startTime);
 			while (playerCoords == null) {
 				playerCoords = calculatePosition(System.currentTimeMillis() - startTime);
